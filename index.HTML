@@ -17,26 +17,60 @@
     .header { height: 50px; border-bottom: 1px solid #dbdbdb; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; position: sticky; top: 0; background: #fff; z-index: 10; }
     .header h1 { font-size: 20px; font-weight: 700; font-family: 'Grand Hotel', cursive, sans-serif; }
     .header-actions { display: flex; align-items: center; gap: 12px; }
-    .view-btn { background: none; border: none; cursor: pointer; display: flex; align-items: center; color: #262626; }
+    .back-btn { background: #efefef; border: none; border-radius: 6px; padding: 6px 12px; font-size: 13px; font-weight: 600; cursor: pointer; display: none; align-items: center; gap: 4px; color: #262626; }
     
-    /* Interactive Search Bar Overlay */
+    /* Search Bar Overlay */
     .search-container { display: none; padding: 10px 16px; background: #fff; border-bottom: 1px solid #dbdbdb; position: sticky; top: 50px; z-index: 9; }
     .search-container.active { display: flex; }
     .search-input { width: 100%; padding: 8px 12px; border: 1px solid #dbdbdb; border-radius: 8px; background: #efefef; font-size: 14px; outline: none; }
     .search-input:focus { background: #fff; border-color: #a8a8a8; }
 
-    /* Feed Layout (Default) */
-    .feed-mode .post { border-bottom: 1px solid #efefef; margin-bottom: 15px; display: block; }
+    /* --- PERMANENT GRID VIEW (DEFAULT) --- */
+    .grid-mode { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: #dbdbdb; }
+    .grid-mode .post-header,
+    .grid-mode .post-content,
+    .grid-mode .swiper-button-next,
+    .grid-mode .swiper-button-prev,
+    .grid-mode .swiper-pagination,
+    .grid-mode .audio-toggle-btn { display: none !important; }
+    .grid-mode .post { margin-bottom: 0; border: none; background: #fff; cursor: pointer; aspect-ratio: 1 / 1; }
+    .grid-mode .swiper { height: 100%; pointer-events: none; }
+
+    /* --- FEED VIEW (EXPANDED) --- */
+    .feed-mode { display: block; background: #ffffff; }
+    .feed-mode .post { border-bottom: 1px solid #efefef; margin-bottom: 15px; display: block; cursor: default; }
     .feed-mode .post-header { display: flex; align-items: center; padding: 10px 16px; }
     .feed-mode .avatar { width: 32px; height: 32px; border-radius: 50%; background: #000; margin-right: 10px; }
     .feed-mode .username { font-weight: 600; font-size: 14px; }
     
-    /* Swiper Carousel Styling */
+    /* Swiper Carousel & Media Styling */
     .swiper { width: 100%; aspect-ratio: 1 / 1; }
-    .swiper-slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .swiper-slide img,
+    .swiper-slide video { width: 100%; height: 100%; object-fit: cover; display: block; }
     .swiper-pagination-bullet { background: #a8a8a8; opacity: 0.7; width: 6px; height: 6px; }
     .swiper-pagination-bullet-active { background: #0095f6; opacity: 1; }
     .swiper-button-next, .swiper-button-prev { color: rgba(255, 255, 255, 0.8); transform: scale(0.6); }
+
+    /* Video Sound Toggle Button */
+    .video-container { position: relative; width: 100%; height: 100%; }
+    .audio-toggle-btn {
+      position: absolute;
+      bottom: 12px;
+      right: 12px;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(38, 38, 38, 0.75);
+      border: none;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 5;
+      transition: transform 0.1s ease;
+    }
+    .audio-toggle-btn:active { transform: scale(0.9); }
 
     .post-content { padding: 12px 16px; }
     .price-tag { font-size: 18px; font-weight: 700; color: #111; margin-bottom: 8px; }
@@ -47,25 +81,49 @@
     .size-picker label { font-size: 13px; font-weight: 600; color: #666; }
     .size-picker select { padding: 6px 10px; border-radius: 6px; border: 1px solid #ccc; font-size: 14px; outline: none; }
     
-    .btn-whatsapp { width: 100%; background-color: #25D366; color: white; border: none; padding: 10px; border-radius: 8px; font-weight: 600; font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; }
+    /* Action Buttons Area */
+    .post-actions { display: flex; gap: 8px; }
+    .btn-add-cart { flex: 1; background-color: #262626; color: white; border: none; padding: 10px; border-radius: 8px; font-weight: 600; font-size: 13px; cursor: pointer; }
+    .btn-add-cart:active { opacity: 0.8; }
+    
+    .btn-whatsapp { flex: 1.2; background-color: #25D366; color: white; border: none; padding: 10px; border-radius: 8px; font-weight: 600; font-size: 13px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px; text-decoration: none; }
     .btn-whatsapp:active { opacity: 0.9; }
-
-    /* --- GRID VIEW STYLES --- */
-    .grid-mode { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: #dbdbdb; }
-    .grid-mode .post-header,
-    .grid-mode .post-content,
-    .grid-mode .swiper-button-next,
-    .grid-mode .swiper-button-prev,
-    .grid-mode .swiper-pagination { display: none !important; }
-    .grid-mode .post { margin-bottom: 0; border: none; background: #fff; cursor: pointer; aspect-ratio: 1 / 1; }
-    .grid-mode .swiper { height: 100%; }
 
     /* Bottom Sticky Navigation */
     .bottom-nav { position: fixed; bottom: 0; width: 100%; max-width: 470px; height: 50px; background: #ffffff; border-top: 1px solid #dbdbdb; display: flex; justify-content: space-around; align-items: center; z-index: 100; }
     .nav-item { display: flex; align-items: center; justify-content: center; color: #262626; text-decoration: none; position: relative; background: none; border: none; cursor: pointer; width: 33.33%; height: 100%; }
     .nav-item.active svg { fill: #000; }
+    
+    /* Cart Badge Icon */
+    .cart-badge { position: absolute; top: 6px; right: 32px; background: #ff3040; color: #fff; font-size: 11px; font-weight: 700; width: 18px; height: 18px; border-radius: 50%; display: none; align-items: center; justify-content: center; }
 
     #no-results { display: none; text-align: center; padding: 40px 16px; color: #8e8e8e; font-size: 14px; }
+
+    /* CART MODAL & DELIVERY FORM */
+    .cart-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 200; display: none; justify-content: center; align-items: flex-end; }
+    .cart-content { width: 100%; max-width: 470px; background: #fff; border-radius: 16px 16px 0 0; padding: 20px; max-height: 85vh; display: flex; flex-direction: column; overflow-y: auto; }
+    .cart-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #dbdbdb; padding-bottom: 12px; margin-bottom: 12px; }
+    .cart-header h2 { font-size: 18px; font-weight: 700; }
+    .close-cart { background: none; border: none; font-size: 22px; cursor: pointer; color: #8e8e8e; }
+    
+    .cart-items { flex: 1; display: flex; flex-direction: column; gap: 12px; margin-bottom: 16px; }
+    .cart-item { display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #f0f0f0; padding-bottom: 8px; }
+    .cart-item-info { font-size: 14px; }
+    .cart-item-info p { font-weight: 600; }
+    .cart-item-info span { font-size: 12px; color: #666; }
+    .cart-item-remove { background: #ffebeb; color: #ff3040; border: none; padding: 4px 8px; border-radius: 4px; font-size: 12px; cursor: pointer; }
+    
+    /* Form Inputs */
+    .delivery-form { margin-top: 10px; padding-top: 12px; border-top: 1px solid #dbdbdb; }
+    .delivery-form h3 { font-size: 14px; font-weight: 700; margin-bottom: 10px; color: #111; }
+    .form-group { margin-bottom: 10px; }
+    .form-group label { display: block; font-size: 12px; font-weight: 600; color: #666; margin-bottom: 4px; }
+    .form-group input, .form-group textarea { width: 100%; padding: 8px 10px; border: 1px solid #dbdbdb; border-radius: 6px; font-size: 13px; outline: none; background: #fafafa; }
+    .form-group input:focus, .form-group textarea:focus { background: #fff; border-color: #a8a8a8; }
+    
+    .cart-footer { border-top: 1px solid #dbdbdb; padding-top: 12px; margin-top: 8px; }
+    .cart-total { display: flex; justify-content: space-between; font-weight: 700; font-size: 16px; margin-bottom: 12px; }
+    .btn-checkout-whatsapp { width: 100%; background-color: #25D366; color: white; border: none; padding: 12px; border-radius: 8px; font-weight: 700; font-size: 15px; cursor: pointer; }
   </style>
 </head>
 <body>
@@ -75,12 +133,9 @@
   <div class="header">
     <h1>KicksStore</h1>
     <div class="header-actions">
-      <!-- Toggle Grid / Feed View Button -->
-      <button class="view-btn" id="toggle-view-btn" onclick="toggleViewMode()" title="Switch Layout">
-        <!-- Grid Icon -->
-        <svg id="grid-icon" aria-label="Grid view" color="#262626" fill="#262626" height="22" role="img" viewBox="0 0 24 24" width="22"><path d="M3 3h7v7H3V3zm11 0h7v7h-7V3zm-11 11h7v7H3v-7zm11 0h7v7h-7v-7z"></path></svg>
-        <!-- Feed Icon -->
-        <svg id="feed-icon" style="display:none;" aria-label="Feed view" color="#262626" fill="#262626" height="22" role="img" viewBox="0 0 24 24" width="22"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V6h16v12z"></path></svg>
+      <!-- Back to Grid Button -->
+      <button class="back-btn" id="back-grid-btn" onclick="switchToGridMode()">
+        ‹ Grid View
       </button>
       
       <svg aria-label="Direct" color="#262626" fill="#262626" height="24" role="img" viewBox="0 0 24 24" width="24"><path d="M13.941 13.953l-3.21 2.378a.75.75 0 01-1.181-.611V11.2a.75.75 0 011.181-.612l3.21 2.378a.75.75 0 010 1.222z"></path><path d="M22 12c0 5.523-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2s10 4.477 10 10zm-2 0a8 8 0 10-16 0 8 8 0 0016 0z"></path></svg>
@@ -92,13 +147,13 @@
     <input type="text" id="search-input" class="search-input" placeholder="Search sneakers..." onkeyup="filterPosts()">
   </div>
 
-  <!-- Feed Container -->
-  <div id="feed-container" class="feed-mode"></div>
+  <!-- Feed Container (Default Grid Mode) -->
+  <div id="feed-container" class="grid-mode"></div>
   <div id="no-results">No matching sneakers found.</div>
 
   <!-- Bottom Sticky Navigation Bar -->
   <nav class="bottom-nav">
-    <button class="nav-item active" id="nav-home" onclick="showAllPosts()" aria-label="Home">
+    <button class="nav-item active" id="nav-home" onclick="switchToGridMode()" aria-label="Home">
       <svg aria-label="Home" color="#262626" fill="#262626" height="24" role="img" viewBox="0 0 24 24" width="24"><path d="M22 22H2v-2h20v2zM21 10l-9-7-9 7v10h18V10z" fill-rule="evenodd"></path></svg>
     </button>
     
@@ -106,25 +161,71 @@
       <svg aria-label="Search" color="#262626" fill="none" height="24" stroke="currentColor" stroke-width="2" role="img" viewBox="0 0 24 24" width="24"><path d="M19 10.5A8.5 8.5 0 1110.5 2a8.5 8.5 0 018.5 8.5zM21 21l-5.2-5.2"></path></svg>
     </button>
     
-    <button class="nav-item" aria-label="Shopping Cart">
+    <button class="nav-item" id="nav-cart" onclick="toggleCartModal()" aria-label="Shopping Cart">
+      <div class="cart-badge" id="cart-badge">0</div>
       <svg aria-label="Shopping Bag" color="#262626" fill="none" height="24" stroke="currentColor" stroke-width="2" role="img" viewBox="0 0 24 24" width="24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4zM3 6h18M16 10a4 4 0 01-8 0"></path></svg>
     </button>
   </nav>
 
 </div>
 
+<!-- Shopping Cart Slide-Up Modal with Delivery Form -->
+<div class="cart-modal" id="cart-modal" onclick="closeCartOnOutsideClick(event)">
+  <div class="cart-content">
+    <div class="cart-header">
+      <h2>Your Order & Delivery</h2>
+      <button class="close-cart" onclick="toggleCartModal()">&times;</button>
+    </div>
+    
+    <div class="cart-items" id="cart-items-container">
+      <!-- Items dynamically added here -->
+    </div>
+
+    <!-- Delivery Form -->
+    <div class="delivery-form" id="delivery-form">
+      <h3>Delivery Details</h3>
+      <div class="form-group">
+        <label for="cust-name">Full Name *</label>
+        <input type="text" id="cust-name" placeholder="Enter your full name" required>
+      </div>
+      <div class="form-group">
+        <label for="cust-phone">Phone Number *</label>
+        <input type="tel" id="cust-phone" placeholder="e.g. 08012345678" required>
+      </div>
+      <div class="form-group">
+        <label for="cust-address">Delivery Address *</label>
+        <textarea id="cust-address" rows="2" placeholder="House number, street name, city, state" required></textarea>
+      </div>
+    </div>
+
+    <div class="cart-footer">
+      <div class="cart-total">
+        <span>Total Price:</span>
+        <span id="cart-total-price">₦ 0</span>
+      </div>
+      <button class="btn-checkout-whatsapp" onclick="checkoutCartViaWhatsapp()">
+        Send Order Details to WhatsApp
+      </button>
+    </div>
+  </div>
+</div>
+
 <!-- Swiper JS -->
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
 <script>
-  const WHATSAPP_NUMBER = "2348000000000"; // REPLACE WITH YOUR PHONE NUMBER
+  // YOUR PHONE NUMBER IN INTERNATIONAL FORMAT
+  const WHATSAPP_NUMBER = "2347071839581"; 
+
+  // SHOPPING CART STATE
+  let cart = [];
 
   // YOUR PRODUCT LIST
   const products = [
     {
       id: 1,
       name: "HIGH QUALITY NEW BALANCE SNEAKERS",
-      price: "85,000",
+      price: 85000,
       caption: "HIGH QUALITY NEW BALANCE SNEAKERS - Premium Build & Comfort.",
       images: ["https://res.cloudinary.com/vpgritcv/image/upload/v1788818614/WhatsApp_Image_2026-09-07_at_14.50.02.jpg"],
       sizes: ["40", "41", "42", "43", "44", "45"]
@@ -132,7 +233,7 @@
     {
       id: 2,
       name: "HIGH QUALITY NEW BALANCE SNEAKERS",
-      price: "85,000",
+      price: 85000,
       caption: "HIGH QUALITY NEW BALANCE SNEAKERS - Premium Build & Comfort.",
       images: ["https://res.cloudinary.com/vpgritcv/image/upload/v1788818614/WhatsApp_Image_2026-09-07_at_14.50.14_1.jpg"],
       sizes: ["40", "41", "42", "43", "44", "45"]
@@ -140,7 +241,7 @@
     {
       id: 3,
       name: "HIGH QUALITY NEW BALANCE SNEAKERS",
-      price: "85,000",
+      price: 85000,
       caption: "HIGH QUALITY NEW BALANCE SNEAKERS - Premium Build & Comfort.",
       images: ["https://res.cloudinary.com/vpgritcv/image/upload/v1788818613/WhatsApp_Image_2026-09-07_at_14.50.12.jpg"],
       sizes: ["40", "41", "42", "43", "44", "45"]
@@ -148,7 +249,7 @@
     {
       id: 4,
       name: "HIGH QUALITY NEW BALANCE SNEAKERS",
-      price: "85,000",
+      price: 85000,
       caption: "HIGH QUALITY NEW BALANCE SNEAKERS - Premium Build & Comfort.",
       images: ["https://res.cloudinary.com/vpgritcv/image/upload/v1788818613/WhatsApp_Image_2026-09-07_at_14.50.03.jpg"],
       sizes: ["40", "41", "42", "43", "44", "45"]
@@ -156,7 +257,7 @@
     {
       id: 5,
       name: "HIGH QUALITY NEW BALANCE SNEAKERS",
-      price: "85,000",
+      price: 85000,
       caption: "HIGH QUALITY NEW BALANCE SNEAKERS - Premium Build & Comfort.",
       images: ["https://res.cloudinary.com/vpgritcv/image/upload/v1788818609/WhatsApp_Image_2026-09-07_at_14.50.12_1.jpg"],
       sizes: ["40", "41", "42", "43", "44", "45"]
@@ -170,7 +271,31 @@
 
     products.forEach((product) => {
       const slidesHtml = product.images
-        .map(imgUrl => `<div class="swiper-slide"><img src="${imgUrl}" alt="${product.name}"></div>`)
+        .map(mediaUrl => {
+          const isVideo = mediaUrl.endsWith('.mp4') || mediaUrl.includes('/video/upload/');
+
+          if (isVideo) {
+            return `
+              <div class="swiper-slide">
+                <div class="video-container">
+                  <video src="${mediaUrl}" autoplay loop muted playsinline style="width:100%; height:100%; object-fit:cover;"></video>
+                  <button class="audio-toggle-btn" onclick="event.stopPropagation(); toggleAudio(this)" aria-label="Toggle Sound">
+                    <svg class="icon-muted" width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73 4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
+                    </svg>
+                    <svg class="icon-unmuted" width="16" height="16" fill="currentColor" viewBox="0 0 24 24" style="display: none;">
+                      <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+                    </svg>
+                  </button>
+                </div>
+              </div>`;
+          } else {
+            return `
+              <div class="swiper-slide">
+                <img src="${mediaUrl}" alt="${product.name}">
+              </div>`;
+          }
+        })
         .join("");
 
       const sizesHtml = product.sizes
@@ -178,7 +303,7 @@
         .join("");
 
       const postHtml = `
-        <div class="post" onclick="handleGridClick(this)" data-product="${product.name.toLowerCase()} ${product.caption.toLowerCase()}">
+        <div class="post" onclick="handlePostClick(this)" data-product="${product.name.toLowerCase()} ${product.caption.toLowerCase()}">
           <div class="post-header">
             <div class="avatar"></div>
             <div class="username">kicks_store</div>
@@ -194,7 +319,7 @@
           </div>
           
           <div class="post-content">
-            <div class="price-tag">₦ ${product.price}</div>
+            <div class="price-tag">₦ ${product.price.toLocaleString()}</div>
             <div class="caption">
               <span>kicks_store</span> ${product.caption}
             </div>
@@ -206,9 +331,15 @@
               </select>
             </div>
 
-            <button class="btn-whatsapp" onclick="event.stopPropagation(); orderOnWhatsapp('${product.name}', '${product.price}', 'size-${product.id}')">
-              Order Now via WhatsApp
-            </button>
+            <div class="post-actions">
+              <button class="btn-add-cart" onclick="event.stopPropagation(); addToCart(${product.id}, 'size-${product.id}')">
+                Add to Cart
+              </button>
+
+              <button class="btn-whatsapp" onclick="event.stopPropagation(); orderSingleWhatsapp(${product.id}, 'size-${product.id}')">
+                Buy Direct
+              </button>
+            </div>
           </div>
         </div>
       `;
@@ -224,35 +355,176 @@
     });
   }
 
-  // Toggle View Mode (Feed vs. Grid)
-  function toggleViewMode() {
-    const container = document.getElementById('feed-container');
-    const gridIcon = document.getElementById('grid-icon');
-    const feedIcon = document.getElementById('feed-icon');
+  // --- CART & DELIVERY FORM FUNCTIONS ---
+  function addToCart(productId, sizeSelectId) {
+    const selectedSize = document.getElementById(sizeSelectId).value;
+    const product = products.find(p => p.id === productId);
 
-    if (container.classList.contains('feed-mode')) {
-      container.classList.remove('feed-mode');
-      container.classList.add('grid-mode');
-      gridIcon.style.display = 'none';
-      feedIcon.style.display = 'block';
+    const existingIndex = cart.findIndex(item => item.id === productId && item.size === selectedSize);
+
+    if (existingIndex > -1) {
+      cart[existingIndex].quantity += 1;
     } else {
+      cart.push({
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        size: selectedSize,
+        quantity: 1
+      });
+    }
+
+    updateCartUI();
+    alert(`Added ${product.name} (Size ${selectedSize}) to your cart!`);
+  }
+
+  function orderSingleWhatsapp(productId, sizeSelectId) {
+    const selectedSize = document.getElementById(sizeSelectId).value;
+    const product = products.find(p => p.id === productId);
+
+    // Clear cart and put single item
+    cart = [{
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      size: selectedSize,
+      quantity: 1
+    }];
+
+    updateCartUI();
+    toggleCartModal(); // Open cart modal to enter address/phone
+  }
+
+  function removeFromCart(index) {
+    cart.splice(index, 1);
+    updateCartUI();
+  }
+
+  function updateCartUI() {
+    const badge = document.getElementById('cart-badge');
+    const container = document.getElementById('cart-items-container');
+    const totalElem = document.getElementById('cart-total-price');
+
+    const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+    const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+
+    // Update Badge
+    if (totalCount > 0) {
+      badge.textContent = totalCount;
+      badge.style.display = 'flex';
+    } else {
+      badge.style.display = 'none';
+    }
+
+    // Render Cart Modal Items
+    if (cart.length === 0) {
+      container.innerHTML = `<p style="text-align:center; color:#8e8e8e; padding: 20px 0;">Your cart is empty.</p>`;
+      document.getElementById('delivery-form').style.display = 'none';
+    } else {
+      document.getElementById('delivery-form').style.display = 'block';
+      container.innerHTML = cart.map((item, index) => `
+        <div class="cart-item">
+          <div class="cart-item-info">
+            <p>${item.name}</p>
+            <span>Size: ${item.size} | Qty: ${item.quantity} | ₦ ${(item.price * item.quantity).toLocaleString()}</span>
+          </div>
+          <button class="cart-item-remove" onclick="removeFromCart(${index})">Remove</button>
+        </div>
+      `).join('');
+    }
+
+    totalElem.textContent = `₦ ${totalPrice.toLocaleString()}`;
+  }
+
+  function toggleCartModal() {
+    const modal = document.getElementById('cart-modal');
+    modal.style.display = (modal.style.display === 'flex') ? 'none' : 'flex';
+  }
+
+  function closeCartOnOutsideClick(e) {
+    if (e.target.id === 'cart-modal') {
+      toggleCartModal();
+    }
+  }
+
+  // Checkout via WhatsApp with Form Validation
+  function checkoutCartViaWhatsapp() {
+    if (cart.length === 0) {
+      alert("Your cart is empty!");
+      return;
+    }
+
+    const name = document.getElementById('cust-name').value.trim();
+    const phone = document.getElementById('cust-phone').value.trim();
+    const address = document.getElementById('cust-address').value.trim();
+
+    if (!name || !phone || !address) {
+      alert("Please fill in your Name, Phone Number, and Delivery Address before checking out.");
+      return;
+    }
+
+    let itemsList = cart.map((item, i) => `${i + 1}. *${item.name}*\n   Size: ${item.size} | Qty: ${item.quantity} | Price: ₦${(item.price * item.quantity).toLocaleString()}`).join('\n\n');
+    const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+
+    const message = `🚨 *NEW ORDER PLACED* 🚨\n\n` +
+                    `👤 *Customer Name:* ${name}\n` +
+                    `📞 *Calling Phone:* ${phone}\n` +
+                    `📍 *Delivery Address:* ${address}\n\n` +
+                    `📦 *ORDER DETAILS:*\n` +
+                    `${itemsList}\n\n` +
+                    `💰 *TOTAL AMOUNT:* ₦${totalPrice.toLocaleString()}\n\n` +
+                    `Please confirm availability and payment options for delivery.`;
+
+    window.location.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+  }
+
+  // Toggle Video Sound
+  function toggleAudio(buttonElement) {
+    const video = buttonElement.previousElementSibling;
+    const iconMuted = buttonElement.querySelector('.icon-muted');
+    const iconUnmuted = buttonElement.querySelector('.icon-unmuted');
+
+    if (video.muted) {
+      video.muted = false;
+      iconMuted.style.display = 'none';
+      iconUnmuted.style.display = 'block';
+    } else {
+      video.muted = true;
+      iconMuted.style.display = 'block';
+      iconUnmuted.style.display = 'none';
+    }
+  }
+
+  // Click on a grid item to expand feed mode
+  function handlePostClick(element) {
+    const container = document.getElementById('feed-container');
+    const backBtn = document.getElementById('back-grid-btn');
+
+    if (container.classList.contains('grid-mode')) {
       container.classList.remove('grid-mode');
       container.classList.add('feed-mode');
-      gridIcon.style.display = 'block';
-      feedIcon.style.display = 'none';
+      backBtn.style.display = 'flex';
+      
+      setTimeout(() => {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 50);
     }
   }
 
-  // Tapping a product grid item switches back to Feed Mode and scrolls to it
-  function handleGridClick(element) {
+  // Return to Grid View
+  function switchToGridMode() {
     const container = document.getElementById('feed-container');
-    if (container.classList.contains('grid-mode')) {
-      toggleViewMode();
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
+    const backBtn = document.getElementById('back-grid-btn');
+
+    container.classList.remove('feed-mode');
+    container.classList.add('grid-mode');
+    backBtn.style.display = 'none';
+    
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setActiveNav('nav-home');
   }
 
-  // Search Toggle
+  // Search Functions
   function toggleSearchBar() {
     const searchBar = document.getElementById('search-bar');
     const searchInput = document.getElementById('search-input');
@@ -291,24 +563,6 @@
     });
 
     document.getElementById('no-results').style.display = visibleCount === 0 ? 'block' : 'none';
-  }
-
-  function showAllPosts() {
-    document.getElementById('search-bar').classList.remove('active');
-    document.getElementById('search-input').value = '';
-    filterPosts();
-    setActiveNav('nav-home');
-  }
-
-  function orderOnWhatsapp(productName, price, sizeSelectId) {
-    const selectedSize = document.getElementById(sizeSelectId).value;
-    const message = `Hello, I want to order the following sneaker:\n\n` +
-                    `👟 *Item:* ${productName}\n` +
-                    `💰 *Price:* ₦${price}\n` +
-                    `📏 *Size:* ${selectedSize}\n\n` +
-                    `Please let me know how to proceed with payment and delivery.`;
-                    
-    window.location.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
   }
 
   // Initial Run

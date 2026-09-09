@@ -66,8 +66,21 @@
     .grid-mode .swiper-button-prev,
     .grid-mode .swiper-pagination,
     .grid-mode .audio-toggle-btn { display: none !important; }
-    .grid-mode .post { margin-bottom: 0; border: none; background: #fff; cursor: pointer; aspect-ratio: 1 / 1; }
+    .grid-mode .post { margin-bottom: 0; border: none; background: #fff; cursor: pointer; aspect-ratio: 1 / 1; position: relative; }
     .grid-mode .swiper { height: 100%; pointer-events: none; }
+    
+    /* Pin Badge Icon in Grid Mode */
+    .grid-pin-badge {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      background: rgba(38, 38, 38, 0.85);
+      color: #fff;
+      font-size: 10px;
+      padding: 2px 5px;
+      border-radius: 4px;
+      z-index: 5;
+    }
 
     /* --- FEED VIEW (EXPANDED) --- */
     .feed-mode { display: block; background: #ffffff; }
@@ -76,6 +89,20 @@
     .feed-mode .avatar { width: 32px; height: 32px; border-radius: 50%; background: #000; margin-right: 10px; }
     .feed-mode .username { font-weight: 600; font-size: 14px; }
     
+    /* Pinned Badge in Feed Header */
+    .pin-badge {
+      margin-left: auto;
+      font-size: 11px;
+      background: #262626;
+      color: #ffffff;
+      padding: 3px 8px;
+      border-radius: 12px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+
     /* Swiper Carousel & Media Styling */
     .swiper { width: 100%; aspect-ratio: 1 / 1; }
     .swiper-slide img,
@@ -123,7 +150,7 @@
     .btn-whatsapp:active { opacity: 0.9; }
 
     /* Bottom Sticky Navigation */
-    .bottom-nav { position: fixed; bottom: 0; width: 100%; max-width: 470px; height: 50px; background: #ffffff; border-top: 1px solid #dbdbdb; display: flex; justify-content: space-around; align-items: center; z-index: 100; }
+    .bottom-nav { position: fixed; bottom: 0; width: 100%; max-width: 470px; height: 50px; background: #ffffff; border-top: 1px solid #dbdbdb; display: flex; justify-space-around; align-items: center; z-index: 100; }
     .nav-item { display: flex; align-items: center; justify-content: center; color: #262626; text-decoration: none; position: relative; background: none; border: none; cursor: pointer; width: 33.33%; height: 100%; }
     .nav-item.active svg { fill: #000; }
     
@@ -270,11 +297,12 @@
   let cart = [];
   let activeCategory = "all";
 
-  // YOUR PRODUCT LIST WITH CATEGORIES ADDED
+  // YOUR PRODUCT LIST WITH PINNED FEATURE ADDED
   const products = [
     {
       id: 1,
       category: "new-balance",
+      pinned: true, // <--- PINNED POST: Appears first
       name: "HIGH QUALITY NEW BALANCE SNEAKERS",
       price: 85000,
       caption: "HIGH QUALITY NEW BALANCE SNEAKERS - Premium Build & Comfort.",
@@ -284,6 +312,7 @@
     {
       id: 2,
       category: "new-balance",
+      pinned: false,
       name: "HIGH QUALITY NEW BALANCE SNEAKERS",
       price: 85000,
       caption: "HIGH QUALITY NEW BALANCE SNEAKERS - Premium Build & Comfort.",
@@ -293,6 +322,7 @@
     {
       id: 3,
       category: "new-balance",
+      pinned: false,
       name: "HIGH QUALITY NEW BALANCE SNEAKERS",
       price: 85000,
       caption: "HIGH QUALITY NEW BALANCE SNEAKERS - Premium Build & Comfort.",
@@ -302,6 +332,7 @@
     {
       id: 4,
       category: "new-balance",
+      pinned: false,
       name: "HIGH QUALITY NEW BALANCE SNEAKERS",
       price: 85000,
       caption: "HIGH QUALITY NEW BALANCE SNEAKERS - Premium Build & Comfort.",
@@ -311,6 +342,7 @@
     {
       id: 5,
       category: "new-balance",
+      pinned: false,
       name: "HIGH QUALITY NEW BALANCE SNEAKERS",
       price: 85000,
       caption: "HIGH QUALITY NEW BALANCE SNEAKERS - Premium Build & Comfort.",
@@ -324,7 +356,10 @@
     const feedContainer = document.getElementById("feed-container");
     feedContainer.innerHTML = "";
 
-    products.forEach((product) => {
+    // SORT PRODUCTS: Pinned items are sorted to the front of the list
+    const sortedProducts = [...products].sort((a, b) => (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0));
+
+    sortedProducts.forEach((product) => {
       const slidesHtml = product.images
         .map(mediaUrl => {
           const isVideo = mediaUrl.endsWith('.mp4') || mediaUrl.includes('/video/upload/');
@@ -357,11 +392,17 @@
         .map(size => `<option value="${size}">Size ${size}</option>`)
         .join("");
 
+      // PIN BADGE HTML FOR FEED & GRID VIEWS
+      const pinHeaderBadge = product.pinned ? `<div class="pin-badge">📌 Pinned</div>` : ``;
+      const gridPinBadge = product.pinned ? `<div class="grid-pin-badge">📌</div>` : ``;
+
       const postHtml = `
         <div class="post" data-category="${product.category}" onclick="handlePostClick(this)" data-product="${product.name.toLowerCase()} ${product.caption.toLowerCase()}">
+          ${gridPinBadge}
           <div class="post-header">
             <div class="avatar"></div>
             <div class="username">kicks_store</div>
+            ${pinHeaderBadge}
           </div>
           
           <div class="swiper post-carousel">

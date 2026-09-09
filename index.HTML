@@ -19,8 +19,41 @@
     .header-actions { display: flex; align-items: center; gap: 12px; }
     .back-btn { background: #efefef; border: none; border-radius: 6px; padding: 6px 12px; font-size: 13px; font-weight: 600; cursor: pointer; display: none; align-items: center; gap: 4px; color: #262626; }
     
+    /* Category Filter Bar */
+    .categories-bar {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 10px 16px;
+      background: #ffffff;
+      border-bottom: 1px solid #dbdbdb;
+      scrollbar-width: none; /* Firefox */
+      position: sticky;
+      top: 50px;
+      z-index: 9;
+    }
+    .categories-bar::-webkit-scrollbar { display: none; } /* Chrome, Safari */
+    
+    .category-chip {
+      background: #efefef;
+      border: 1px solid #dbdbdb;
+      border-radius: 20px;
+      padding: 6px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      white-space: nowrap;
+      cursor: pointer;
+      color: #262626;
+      transition: all 0.2s ease;
+    }
+    .category-chip.active {
+      background: #262626;
+      color: #ffffff;
+      border-color: #262626;
+    }
+
     /* Search Bar Overlay */
-    .search-container { display: none; padding: 10px 16px; background: #fff; border-bottom: 1px solid #dbdbdb; position: sticky; top: 50px; z-index: 9; }
+    .search-container { display: none; padding: 10px 16px; background: #fff; border-bottom: 1px solid #dbdbdb; position: sticky; top: 92px; z-index: 8; }
     .search-container.active { display: flex; }
     .search-input { width: 100%; padding: 8px 12px; border: 1px solid #dbdbdb; border-radius: 8px; background: #efefef; font-size: 14px; outline: none; }
     .search-input:focus { background: #fff; border-color: #a8a8a8; }
@@ -142,6 +175,22 @@
     </div>
   </div>
 
+  <!-- Horizontal Scrollable Category Filter -->
+  <div class="categories-bar" id="categories-bar">
+    <button class="category-chip active" onclick="filterByCategory('all', this)">All</button>
+    <button class="category-chip" onclick="filterByCategory('new-balance', this)">New Balance</button>
+    <button class="category-chip" onclick="filterByCategory('air-force-1', this)">Air Force 1</button>
+    <button class="category-chip" onclick="filterByCategory('adidas', this)">Adidas</button>
+    <button class="category-chip" onclick="filterByCategory('louis-vuitton', this)">Louis Vuitton</button>
+    <button class="category-chip" onclick="filterByCategory('balenciaga', this)">Balenciaga</button>
+    <button class="category-chip" onclick="filterByCategory('yeezy', this)">Yeezy</button>
+    <button class="category-chip" onclick="filterByCategory('air-jordan', this)">Air Jordan</button>
+    <button class="category-chip" onclick="filterByCategory('nike-runners', this)">Nike Runners</button>
+    <button class="category-chip" onclick="filterByCategory('saucony', this)">Saucony</button>
+    <button class="category-chip" onclick="filterByCategory('puma', this)">Puma</button>
+    <button class="category-chip" onclick="filterByCategory('others', this)">Others</button>
+  </div>
+
   <!-- Search Input Container -->
   <div class="search-container" id="search-bar">
     <input type="text" id="search-input" class="search-input" placeholder="Search sneakers..." onkeyup="filterPosts()">
@@ -149,7 +198,7 @@
 
   <!-- Feed Container (Default Grid Mode) -->
   <div id="feed-container" class="grid-mode"></div>
-  <div id="no-results">No matching sneakers found.</div>
+  <div id="no-results">No matching sneakers found in this category.</div>
 
   <!-- Bottom Sticky Navigation Bar -->
   <nav class="bottom-nav">
@@ -181,20 +230,20 @@
       <!-- Items dynamically added here -->
     </div>
 
-    <!-- Delivery Form -->
+    <!-- Delivery Form (Appears when viewing Cart) -->
     <div class="delivery-form" id="delivery-form">
       <h3>Delivery Details</h3>
       <div class="form-group">
         <label for="cust-name">Full Name *</label>
-        <input type="text" id="cust-name" placeholder="Enter your full name" required>
+        <input type="text" id="cust-name" placeholder="Enter your full name">
       </div>
       <div class="form-group">
         <label for="cust-phone">Phone Number *</label>
-        <input type="tel" id="cust-phone" placeholder="e.g. 08012345678" required>
+        <input type="tel" id="cust-phone" placeholder="e.g. 08012345678">
       </div>
       <div class="form-group">
         <label for="cust-address">Delivery Address *</label>
-        <textarea id="cust-address" rows="2" placeholder="House number, street name, city, state" required></textarea>
+        <textarea id="cust-address" rows="2" placeholder="House number, street name, city, state"></textarea>
       </div>
     </div>
 
@@ -219,11 +268,13 @@
 
   // SHOPPING CART STATE
   let cart = [];
+  let activeCategory = "all";
 
-  // YOUR PRODUCT LIST
+  // YOUR PRODUCT LIST WITH CATEGORIES ADDED
   const products = [
     {
       id: 1,
+      category: "new-balance",
       name: "HIGH QUALITY NEW BALANCE SNEAKERS",
       price: 85000,
       caption: "HIGH QUALITY NEW BALANCE SNEAKERS - Premium Build & Comfort.",
@@ -232,6 +283,7 @@
     },
     {
       id: 2,
+      category: "new-balance",
       name: "HIGH QUALITY NEW BALANCE SNEAKERS",
       price: 85000,
       caption: "HIGH QUALITY NEW BALANCE SNEAKERS - Premium Build & Comfort.",
@@ -240,6 +292,7 @@
     },
     {
       id: 3,
+      category: "new-balance",
       name: "HIGH QUALITY NEW BALANCE SNEAKERS",
       price: 85000,
       caption: "HIGH QUALITY NEW BALANCE SNEAKERS - Premium Build & Comfort.",
@@ -248,6 +301,7 @@
     },
     {
       id: 4,
+      category: "new-balance",
       name: "HIGH QUALITY NEW BALANCE SNEAKERS",
       price: 85000,
       caption: "HIGH QUALITY NEW BALANCE SNEAKERS - Premium Build & Comfort.",
@@ -256,6 +310,7 @@
     },
     {
       id: 5,
+      category: "new-balance",
       name: "HIGH QUALITY NEW BALANCE SNEAKERS",
       price: 85000,
       caption: "HIGH QUALITY NEW BALANCE SNEAKERS - Premium Build & Comfort.",
@@ -303,7 +358,7 @@
         .join("");
 
       const postHtml = `
-        <div class="post" onclick="handlePostClick(this)" data-product="${product.name.toLowerCase()} ${product.caption.toLowerCase()}">
+        <div class="post" data-category="${product.category}" onclick="handlePostClick(this)" data-product="${product.name.toLowerCase()} ${product.caption.toLowerCase()}">
           <div class="post-header">
             <div class="avatar"></div>
             <div class="username">kicks_store</div>
@@ -355,7 +410,18 @@
     });
   }
 
-  // --- CART & DELIVERY FORM FUNCTIONS ---
+  // --- CATEGORY FILTER FUNCTION ---
+  function filterByCategory(categoryKey, btnElement) {
+    activeCategory = categoryKey;
+
+    // Update active pill styling
+    document.querySelectorAll('.category-chip').forEach(chip => chip.classList.remove('active'));
+    if (btnElement) btnElement.classList.add('active');
+
+    filterPosts();
+  }
+
+  // --- CART FUNCTIONS ---
   function addToCart(productId, sizeSelectId) {
     const selectedSize = document.getElementById(sizeSelectId).value;
     const product = products.find(p => p.id === productId);
@@ -378,21 +444,18 @@
     alert(`Added ${product.name} (Size ${selectedSize}) to your cart!`);
   }
 
+  // DIRECT SINGLE ITEM ORDER: Opens WhatsApp immediately
   function orderSingleWhatsapp(productId, sizeSelectId) {
     const selectedSize = document.getElementById(sizeSelectId).value;
     const product = products.find(p => p.id === productId);
 
-    // Clear cart and put single item
-    cart = [{
-      id: product.id,
-      name: product.name,
-      price: product.price,
-      size: selectedSize,
-      quantity: 1
-    }];
-
-    updateCartUI();
-    toggleCartModal(); // Open cart modal to enter address/phone
+    const message = `Hello, I want to order the following sneaker:\n\n` +
+                    `👟 *Item:* ${product.name}\n` +
+                    `💰 *Price:* ₦${product.price.toLocaleString()}\n` +
+                    `📏 *Size:* ${selectedSize}\n\n` +
+                    `Please let me know how to proceed with payment and delivery.`;
+                    
+    window.location.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
   }
 
   function removeFromCart(index) {
@@ -447,7 +510,7 @@
     }
   }
 
-  // Checkout via WhatsApp with Form Validation
+  // Multi-item Checkout via WhatsApp
   function checkoutCartViaWhatsapp() {
     if (cart.length === 0) {
       alert("Your cart is empty!");
@@ -466,7 +529,7 @@
     let itemsList = cart.map((item, i) => `${i + 1}. *${item.name}*\n   Size: ${item.size} | Qty: ${item.quantity} | Price: ₦${(item.price * item.quantity).toLocaleString()}`).join('\n\n');
     const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
 
-    const message = `🚨 *NEW ORDER PLACED* 🚨\n\n` +
+    const message = `🚨 *NEW CART ORDER PLACED* 🚨\n\n` +
                     `👤 *Customer Name:* ${name}\n` +
                     `📞 *Calling Phone:* ${phone}\n` +
                     `📍 *Delivery Address:* ${address}\n\n` +
@@ -554,7 +617,12 @@
 
     posts.forEach(post => {
       const productKeywords = post.getAttribute('data-product');
-      if (productKeywords.includes(query)) {
+      const postCategory = post.getAttribute('data-category');
+
+      const matchesSearch = productKeywords.includes(query);
+      const matchesCategory = (activeCategory === 'all') || (postCategory === activeCategory);
+
+      if (matchesSearch && matchesCategory) {
         post.style.display = 'block';
         visibleCount++;
       } else {

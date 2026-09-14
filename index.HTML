@@ -71,12 +71,13 @@
       height: 100%;
       overflow-x: auto;
       scroll-snap-type: x mandatory;
-      scrollbar-width: none; /* Firefox */
-      -ms-overflow-style: none;  /* IE/Edge */
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      scroll-behavior: smooth;
     }
 
     .carousel-track::-webkit-scrollbar {
-      display: none; /* Chrome/Safari */
+      display: none;
     }
 
     .carousel-slide {
@@ -103,6 +104,29 @@
       padding: 4px 8px;
       border-radius: 12px;
       pointer-events: none;
+      z-index: 2;
+    }
+
+    .dots-container {
+      position: absolute;
+      bottom: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 5px;
+      z-index: 2;
+    }
+
+    .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.5);
+      transition: background 0.2s ease;
+    }
+
+    .dot.active {
+      background: #ffffff;
     }
 
     /* Card Details */
@@ -251,22 +275,29 @@
           </div>
         `).join("");
 
+        const dotsHTML = isMultiple ? `
+          <div class="dots-container">
+            ${product.images.map((_, i) => `<div class="dot ${i === 0 ? 'active' : ''}"></div>`).join('')}
+          </div>
+        ` : '';
+
         const sizesHTML = product.sizes.map(size => `
           <button class="size-btn">${size}</button>
         `).join("");
 
         return `
-          <div class="card">
+          <div class="card" id="product-${product.id}">
             <div class="card-header">
               <span class="card-title">${product.name}</span>
               ${product.pinned ? `<span class="pinned-tag">Pinned</span>` : ""}
             </div>
             
             <div class="carousel-container">
-              <div class="carousel-track">
+              <div class="carousel-track" onscroll="updateCarousel(this, ${product.images.length})">
                 ${imagesHTML}
               </div>
-              ${isMultiple ? `<span class="badge">1/${product.images.length}</span>` : ""}
+              ${isMultiple ? `<span class="badge" id="badge-${product.id}">1/${product.images.length}</span>` : ""}
+              ${dotsHTML}
             </div>
 
             <div class="card-body">
@@ -281,6 +312,25 @@
           </div>
         `;
       }).join("");
+    }
+
+    function updateCarousel(trackElement, total) {
+      const card = trackElement.closest('.card');
+      const productId = card.id.replace('product-', '');
+      const slideWidth = trackElement.clientWidth;
+      const currentIndex = Math.round(trackElement.scrollLeft / slideWidth);
+
+      // Update badge counter
+      const badge = document.getElementById(`badge-${productId}`);
+      if (badge) {
+        badge.textContent = `${currentIndex + 1}/${total}`;
+      }
+
+      // Update active dot
+      const dots = card.querySelectorAll('.dot');
+      dots.forEach((dot, index) => {
+        dot.classList.toggle('active', index === currentIndex);
+      });
     }
 
     renderProducts();

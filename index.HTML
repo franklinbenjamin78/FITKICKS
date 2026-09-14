@@ -1,219 +1,631 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script type='text/javascript' src='https://buyonlinelewisfit.netlify.app/Vkv0oWDWjQzKV8GcWLK5PqtQmb3YBGg3mk50470Lw990oRGz_7mip0tZ_mmzUFzno0wxk3IEKJ8Fon_kUtq8FPEZtw0HDte6xkPXqLhrVIM1wAwbv1v3iWXklJ1fCAW_M8pLeCgwEksrMRYvoWdKxzkySTNBNi38WONNv6D62YwLLSzDrDTkMu1c3qOzL6edZmlvYFOdIPcsroIDwwENPkHzhP86aTuDDky8qMn0OUSZ8Iii4GjWwh58l07D-2KbO3zPQTyTGueIMN54PnWcIpmpTNjNzJ3udz5BtYU78DBJh5bt1qFukOG1Aot63dNdi4f3uvCBv6HKhjzu_ENC1lrZ4I-1AZ2Cmp9sDjMLYd_BkB_SpFkEtiK88UgTLD_BH1uD42gFLuecCkG1RGyv7ca6Ck7wDA4pN3pIniI0dIFPqSOT111I1kmjQbToUI6w4rIrfJE9fsfkwYGx_N6kUbmevMER-OHEEcM0PwFlI-xgf-I'></script>  
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sneaker Storefront</title>
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-    body { background-color: #f4f4f5; padding-bottom: 70px; color: #18181b; }
+  <meta name="hosting-provider" content="Netlify">
+  <meta name="netlify-deploy" content="https://netlify.new/?utm_campaign=ai-legible&amp;utm_source=meta&amp;utm_medium=referral&amp;utm_id=b5f51b36-cd0d-4e5c-9ac9-8f94578f0456">  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+  <title>Kicks Store</title>
+  
+  <!-- Swiper CSS -->  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  
+  <style>    
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }    
+    body { background-color: #fafafa; color: #262626; display: flex; justify-content: center; }    
+    .app-container { width: 100%; max-width: 470px; background: #ffffff; min-height: 100vh; border-left: 1px solid #dbdbdb; border-right: 1px solid #dbdbdb; padding-bottom: 60px; position: relative; }        
     
-    /* Header & Sticky Search */
-    header { background: #ffffff; padding: 1rem; position: sticky; top: 0; z-index: 100; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
-    .header-title { font-size: 1.25rem; font-weight: 700; text-align: center; margin-bottom: 0.5rem; }
-    .search-bar { display: none; margin-top: 0.5rem; }
-    .search-bar.active { display: block; }
-    .search-bar input { width: 100%; padding: 0.6rem 1rem; border: 1px solid #e4e4e7; border-radius: 8px; font-size: 0.95rem; outline: none; }
+    /* Header */    
+    .header { height: 50px; border-bottom: 1px solid #dbdbdb; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; position: sticky; top: 0; background: #fff; z-index: 10; }    
+    .header h1 { font-size: 20px; font-weight: 700; font-family: 'Grand Hotel', cursive, sans-serif; }    
+    .header-actions { display: flex; align-items: center; gap: 12px; }    
+    .back-btn { background: #efefef; border: none; border-radius: 6px; padding: 6px 12px; font-size: 13px; font-weight: 600; cursor: pointer; display: none; align-items: center; gap: 4px; color: #262626; }        
     
-    /* Category Filter */
-    .categories { display: flex; gap: 0.5rem; overflow-x: auto; padding: 0.5rem 1rem; background: #fff; border-bottom: 1px solid #e4e4e7; scrollbar-width: none; }
-    .category-btn { padding: 0.4rem 0.8rem; border: 1px solid #e4e4e7; border-radius: 20px; background: #fff; font-size: 0.85rem; font-weight: 500; white-space: nowrap; cursor: pointer; }
-    .category-btn.active { background: #18181b; color: #fff; border-color: #18181b; }
-
-    /* Product Feed */
-    .feed { max-width: 600px; margin: 1rem auto; padding: 0 1rem; }
-    .post { background: #ffffff; border-radius: 12px; border: 1px solid #e4e4e7; margin-bottom: 1.5rem; overflow: hidden; }
+    /* Category Filter Bar */    
+    .categories-bar {      
+      display: flex;      
+      gap: 8px;      
+      overflow-x: auto;      
+      padding: 10px 16px;      
+      background: #ffffff;      
+      border-bottom: 1px solid #dbdbdb;      
+      scrollbar-width: none; /* Firefox */      
+      position: sticky;      
+      top: 50px;      
+      z-index: 9;    
+    }    
+    .categories-bar::-webkit-scrollbar { display: none; } /* Chrome, Safari */        
+    .category-chip {      
+      background: #efefef;      
+      border: 1px solid #dbdbdb;      
+      border-radius: 20px;      
+      padding: 6px 14px;      
+      font-size: 12px;      
+      font-weight: 600;      
+      white-space: nowrap;      
+      cursor: pointer;      
+      color: #262626;      
+      transition: all 0.2s ease;    
+    }    
+    .category-chip.active {      
+      background: #262626;      
+      color: #ffffff;      
+      border-color: #262626;    
+    }
     
-    /* Carousel */
-    .carousel-container { position: relative; width: 100%; aspect-ratio: 1 / 1; overflow: hidden; background: #f4f4f5; touch-action: pan-y; }
-    .carousel-track { display: flex; width: 100%; height: 100%; transition: transform 0.3s ease-out; }
-    .carousel-slide { min-width: 100%; height: 100%; }
-    .carousel-slide img { width: 100%; height: 100%; object-fit: cover; }
+    /* Search Bar Overlay */    
+    .search-container { display: none; padding: 10px 16px; background: #fff; border-bottom: 1px solid #dbdbdb; position: sticky; top: 92px; z-index: 8; }    
+    .search-container.active { display: flex; }    
+    .search-input { width: 100%; padding: 8px 12px; border: 1px solid #dbdbdb; border-radius: 8px; background: #efefef; font-size: 14px; outline: none; }    
+    .search-input:focus { background: #fff; border-color: #a8a8a8; }
     
-    /* Card Content */
-    .post-content { padding: 1rem; }
-    .post-title { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.25rem; }
-    .post-price { font-size: 1rem; font-weight: 700; color: #16a34a; margin-bottom: 0.75rem; }
+    /* PERMANENT GRID VIEW (DEFAULT) */    
+    .grid-mode { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: #dbdbdb; }    
+    .grid-mode .post-header,    
+    .grid-mode .post-content,    
+    .grid-mode .swiper-button-next,    
+    .grid-mode .swiper-button-prev,    
+    .grid-mode .swiper-pagination,    
+    .grid-mode .audio-toggle-btn { display: none !important; }    
+    .grid-mode .post { margin-bottom: 0; border: none; background: #fff; cursor: pointer; aspect-ratio: 1 / 1; position: relative; }    
+    .grid-mode .swiper { height: 100%; pointer-events: none; }        
     
-    /* Size Selector */
-    .size-label { font-size: 0.8rem; font-weight: 600; color: #71717a; text-transform: uppercase; margin-bottom: 0.4rem; }
-    .size-options { display: flex; gap: 0.4rem; margin-bottom: 1rem; }
-    .size-chip { border: 1px solid #e4e4e7; border-radius: 6px; padding: 0.3rem 0.6rem; font-size: 0.85rem; cursor: pointer; background: #fff; }
-    .size-chip.selected { border-color: #18181b; background: #18181b; color: #fff; }
+    /* Pin Badge Icon in Grid Mode */    
+    .grid-pin-badge {      
+      position: absolute;      
+      top: 6px;      
+      right: 6px;      
+      background: rgba(38, 38, 38, 0.85);      
+      color: #fff;      
+      font-size: 10px;      
+      padding: 2px 5px;      
+      border-radius: 4px;      
+      z-index: 5;    
+    }
     
-    /* Order Button */
-    .whatsapp-btn { display: block; width: 100%; text-align: center; background: #25d366; color: #fff; font-weight: 600; padding: 0.75rem; border-radius: 8px; text-decoration: none; border: none; cursor: pointer; }
+    /* FEED VIEW (EXPANDED) */    
+    .feed-mode { display: block; background: #ffffff; }    
+    .feed-mode .post { border-bottom: 1px solid #efefef; margin-bottom: 15px; display: block; cursor: default; }    
+    .feed-mode .post-header { display: flex; align-items: center; padding: 10px 16px; }    
+    .feed-mode .avatar { width: 32px; height: 32px; border-radius: 50%; background: #000; margin-right: 10px; }    
+    .feed-mode .username { font-weight: 600; font-size: 14px; }        
     
-    /* Empty State */
-    #no-results { display: none; text-align: center; padding: 3rem 1rem; color: #71717a; }
-
-    /* Bottom Navigation */
-    .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; height: 60px; background: #ffffff; border-top: 1px solid #e4e4e7; display: flex; justify-content: space-around; align-items: center; z-index: 100; }
-    .nav-item { border: none; background: none; font-size: 0.75rem; font-weight: 500; color: #71717a; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 2px; }
-    .nav-item.active { color: #18181b; font-weight: 700; }
+    /* Pinned Badge in Feed Header */    
+    .pin-badge {      
+      margin-left: auto;      
+      font-size: 11px;      
+      background: #262626;      
+      color: #ffffff;      
+      padding: 3px 8px;      
+      border-radius: 12px;      
+      font-weight: 600;      
+      display: flex;      
+      align-items: center;      
+      gap: 3px;    
+    }
+    
+    /* Swiper Carousel & Media Styling */    
+    .swiper { width: 100%; aspect-ratio: 1 / 1; }    
+    .swiper-slide img,    
+    .swiper-slide video { width: 100%; height: 100%; object-fit: cover; display: block; }    
+    .swiper-pagination-bullet { background: #a8a8a8; opacity: 0.7; width: 6px; height: 6px; }    
+    .swiper-pagination-bullet-active { background: #0095f6; opacity: 1; }    
+    .swiper-button-next, .swiper-button-prev { color: rgba(255, 255, 255, 0.8); transform: scale(0.6); }
+    
+    /* Video Sound Toggle Button */    
+    .video-container { position: relative; width: 100%; height: 100%; }    
+    .audio-toggle-btn {      
+      position: absolute;      
+      bottom: 12px;      
+      right: 12px;      
+      width: 32px;      
+      height: 32px;      
+      border-radius: 50%;      
+      background: rgba(38, 38, 38, 0.75);      
+      border: none;      
+      color: #ffffff;      
+      display: flex;      
+      align-items: center;      
+      justify-content: center;      
+      cursor: pointer;      
+      z-index: 5;      
+      transition: transform 0.1s ease;    
+    }    
+    .audio-toggle-btn:active { transform: scale(0.9); }
+    
+    .post-content { padding: 12px 16px; }    
+    .price-tag { font-size: 18px; font-weight: 700; color: #111; margin-bottom: 8px; }    
+    .caption { font-size: 14px; line-height: 1.4; margin-bottom: 12px; }    
+    .caption span { font-weight: 600; margin-right: 5px; }        
+    
+    .size-picker { margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }    
+    .size-picker label { font-size: 13px; font-weight: 600; color: #666; }    
+    .size-picker select { padding: 6px 10px; border-radius: 6px; border: 1px solid #ccc; font-size: 14px; outline: none; }        
+    
+    /* Action Buttons Area */    
+    .post-actions { display: flex; gap: 8px; }    
+    .btn-add-cart { flex: 1; background-color: #262626; color: white; border: none; padding: 10px; border-radius: 8px; font-weight: 600; font-size: 13px; cursor: pointer; }    
+    .btn-add-cart:active { opacity: 0.8; }        
+    
+    .btn-whatsapp { flex: 1.2; background-color: #25D366; color: white; border: none; padding: 10px; border-radius: 8px; font-weight: 600; font-size: 13px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px; text-decoration: none; }    
+    .btn-whatsapp:active { opacity: 0.9; }
+    
+    /* Bottom Sticky Navigation */    
+    .bottom-nav { position: fixed; bottom: 0; width: 100%; max-width: 470px; height: 50px; background: #ffffff; border-top: 1px solid #dbdbdb; display: flex; justify-content: space-around; align-items: center; z-index: 100; }    
+    .nav-item { display: flex; align-items: center; justify-content: center; color: #262626; text-decoration: none; position: relative; background: none; border: none; cursor: pointer; width: 33.33%; height: 100%; }    
+    .nav-item.active svg { fill: #000; }        
+    
+    /* Cart Badge Icon */    
+    .cart-badge { position: absolute; top: 6px; right: 32px; background: #ff3040; color: #fff; font-size: 11px; font-weight: 700; width: 18px; height: 18px; border-radius: 50%; display: none; align-items: center; justify-content: center; }
+    
+    #no-results { display: none; text-align: center; padding: 40px 16px; color: #8e8e8e; font-size: 14px; }
+    
+    /* CART MODAL & DELIVERY FORM */    
+    .cart-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 200; display: none; justify-content: center; align-items: flex-end; }    
+    .cart-content { width: 100%; max-width: 470px; background: #fff; border-radius: 16px 16px 0 0; padding: 20px; max-height: 85vh; display: flex; flex-direction: column; overflow-y: auto; }    
+    .cart-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #dbdbdb; padding-bottom: 12px; margin-bottom: 12px; }    
+    .cart-header h2 { font-size: 18px; font-weight: 700; }    
+    .close-cart { background: none; border: none; font-size: 22px; cursor: pointer; color: #8e8e8e; }        
+    .cart-items { flex: 1; display: flex; flex-direction: column; gap: 12px; margin-bottom: 16px; }    
+    .cart-item { display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #f0f0f0; padding-bottom: 8px; }    
+    .cart-item-info { font-size: 14px; }    
+    .cart-item-info p { font-weight: 600; }    
+    .cart-item-info span { font-size: 12px; color: #666; }    
+    .cart-item-remove { background: #ffebeb; color: #ff3040; border: none; padding: 4px 8px; border-radius: 4px; font-size: 12px; cursor: pointer; }        
+    
+    /* Form Inputs */    
+    .delivery-form { margin-top: 10px; padding-top: 12px; border-top: 1px solid #dbdbdb; }    
+    .delivery-form h3 { font-size: 14px; font-weight: 700; margin-bottom: 10px; color: #111; }    
+    .form-group { margin-bottom: 10px; }    
+    .form-group label { display: block; font-size: 12px; font-weight: 600; color: #666; margin-bottom: 4px; }    
+    .form-group input, .form-group textarea { width: 100%; padding: 8px 10px; border: 1px solid #dbdbdb; border-radius: 6px; font-size: 13px; outline: none; background: #fafafa; }    
+    .form-group input:focus, .form-group textarea:focus { background: #fff; border-color: #a8a8a8; }        
+    .cart-footer { border-top: 1px solid #dbdbdb; padding-top: 12px; margin-top: 8px; }    
+    .cart-total { display: flex; justify-content: space-between; font-weight: 700; font-size: 16px; margin-bottom: 12px; }    
+    .btn-checkout-whatsapp { width: 100%; background-color: #25D366; color: white; border: none; padding: 12px; border-radius: 8px; font-weight: 700; font-size: 15px; cursor: pointer; }  
   </style>
 </head>
 <body>
 
-  <header>
-    <div class="header-title">Sneaker Vault</div>
-    <div id="search-bar" class="search-bar">
-      <input type="text" id="search-input" placeholder="Search sneakers..." oninput="filterPosts()">
-    </div>
-  </header>
-
-  <div class="categories">
-    <button class="category-btn active" onclick="setCategory('all', this)">All</button>
-    <button class="category-btn" onclick="setCategory('running', this)">Running</button>
-    <button class="category-btn" onclick="setCategory('casual', this)">Casual</button>
-    <button class="category-btn" onclick="setCategory('basketball', this)">Basketball</button>
+<div class="app-container">  
+  <!-- Top Header -->  
+  <div class="header">    
+    <h1>KicksStore</h1>    
+    <div class="header-actions">      
+      <!-- Back to Grid Button -->      
+      <button class="back-btn" id="back-grid-btn" onclick="switchToGridMode()">        
+        ‹ Grid View      
+      </button>            
+      <svg aria-label="Direct" color="#262626" fill="#262626" height="24" role="img" viewBox="0 0 24 24" width="24"><path d="M13.941 13.953l-3.21 2.378a.75.75 0 01-1.181-.611V11.2a.75.75 0 011.181-.612l3.21 2.378a.75.75 0 010 1.222z"></path><path d="M22 12c0 5.523-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2s10 4.477 10 10zm-2 0a8 8 0 10-16 0 8 8 0 0016 0z"></path></svg>    
+    </div>  
   </div>
 
-  <main class="feed" id="product-feed"></main>
-  <div id="no-results">No sneakers found matching your filter.</div>
+  <!-- Horizontal Scrollable Category Filter -->  
+  <div class="categories-bar" id="categories-bar">    
+    <button class="category-chip active" onclick="filterByCategory('all', this)">All</button>    
+    <button class="category-chip" onclick="filterByCategory('new-balance', this)">New Balance</button>    
+    <button class="category-chip" onclick="filterByCategory('air-force-1', this)">Air Force 1</button>    
+    <button class="category-chip" onclick="filterByCategory('adidas', this)">Adidas</button>    
+    <button class="category-chip" onclick="filterByCategory('louis-vuitton', this)">Louis Vuitton</button>    
+    <button class="category-chip" onclick="filterByCategory('balenciaga', this)">Balenciaga</button>    
+    <button class="category-chip" onclick="filterByCategory('yeezy', this)">Yeezy</button>    
+    <button class="category-chip" onclick="filterByCategory('air-jordan', this)">Air Jordan</button>    
+    <button class="category-chip" onclick="filterByCategory('nike-runners', this)">Nike Runners</button>    
+    <button class="category-chip" onclick="filterByCategory('saucony', this)">Saucony</button>    
+    <button class="category-chip" onclick="filterByCategory('puma', this)">Puma</button>    
+    <button class="category-chip" onclick="filterByCategory('others', this)">Others</button>  
+  </div>
 
-  <nav class="bottom-nav">
-    <button id="nav-home" class="nav-item active" onclick="resetView()">Home</button>
-    <button id="nav-search" class="nav-item" onclick="toggleSearchBar()">Search</button>
+  <!-- Search Input Container -->  
+  <div class="search-container" id="search-bar">    
+    <input type="text" id="search-input" class="search-input" placeholder="Search sneakers..." onkeyup="filterPosts()">  
+  </div>
+
+  <!-- Feed Container (Default Grid Mode) -->  
+  <div id="feed-container" class="grid-mode"></div>  
+  <div id="no-results">No matching sneakers found in this category.</div>
+
+  <!-- Bottom Sticky Navigation Bar -->  
+  <nav class="bottom-nav">    
+    <button class="nav-item active" id="nav-home" onclick="switchToGridMode()" aria-label="Home">      
+      <svg aria-label="Home" color="#262626" fill="#262626" height="24" role="img" viewBox="0 0 24 24" width="24"><path d="M22 22H2v-2h20v2zM21 10l-9-7-9 7v10h18V10z" fill-rule="evenodd"></path></svg>    
+    </button>        
+    <button class="nav-item" id="nav-search" onclick="toggleSearchBar()" aria-label="Search">      
+      <svg aria-label="Search" color="#262626" fill="none" height="24" stroke="currentColor" stroke-width="2" role="img" viewBox="0 0 24 24" width="24"><path d="M19 10.5A8.5 8.5 0 1110.5 2a8.5 8.5 0 018.5 8.5zM21 21l-5.2-5.2"></path></svg>    
+    </button>        
+    <button class="nav-item" id="nav-cart" onclick="toggleCartModal()" aria-label="Shopping Cart">      
+      <div class="cart-badge" id="cart-badge">0</div>      
+      <svg aria-label="Shopping Bag" color="#262626" fill="none" height="24" stroke="currentColor" stroke-width="2" role="img" viewBox="0 0 24 24" width="24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4zM3 6h18M16 10a4 4 0 01-8 0"></path></svg>    
+    </button>  
   </nav>
+</div>
 
-<script>
-  // Product Catalog Array (Replace image URLs with your Cloudinary links)
-  const products = [
-    {
-      id: 1,
-      name: "Air Jordan Retro High",
-      category: "basketball",
-      keywords: "air jordan retro high basketball nike black red",
-      price: "$180",
-      sizes: [40, 41, 42, 43, 44, 45],
-      images: [
-        "https://images.unsplash.com/photo-1552346154-21d32810aba3?w=600",
-        "https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?w=600"
-      ]
-    },
-    {
-      id: 2,
-      name: "UltraBoost Runner",
-      category: "running",
-      keywords: "ultraboost runner adidas white running comfort",
-      price: "$140",
-      sizes: [40, 41, 42, 43, 44, 45],
-      images: [
-        "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600",
-        "https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=600"
-      ]
-    }
+<!-- Shopping Cart Slide-Up Modal with Delivery Form -->
+<div class="cart-modal" id="cart-modal" onclick="closeCartOnOutsideClick(event)">  
+  <div class="cart-content">    
+    <div class="cart-header">      
+      <h2>Your Order & Delivery</h2>      
+      <button class="close-cart" onclick="toggleCartModal()">&times;</button>    
+    </div>        
+    <div class="cart-items" id="cart-items-container">      
+      <!-- Items dynamically added here -->    
+    </div>
+
+    <!-- Delivery Form (Appears when viewing Cart) -->    
+    <div class="delivery-form" id="delivery-form">      
+      <h3>Delivery Details</h3>      
+      <div class="form-group">        
+        <label for="cust-name">Full Name *</label>        
+        <input type="text" id="cust-name" placeholder="Enter your full name">      
+      </div>      
+      <div class="form-group">        
+        <label for="cust-phone">Phone Number *</label>        
+        <input type="tel" id="cust-phone" placeholder="e.g. 08012345678">      
+      </div>      
+      <div class="form-group">        
+        <label for="cust-address">Delivery Address *</label>        
+        <textarea id="cust-address" rows="2" placeholder="House number, street name, city, state"></textarea>      
+      </div>    
+    </div>
+
+    <div class="cart-footer">      
+      <div class="cart-total">        
+        <span>Total Price:</span>        
+        <span id="cart-total-price">₦ 0</span>      
+      </div>      
+      <button class="btn-checkout-whatsapp" onclick="checkoutCartViaWhatsapp()">        
+        Send Order Details to WhatsApp      
+      </button>    
+    </div>  
+  </div>
+</div>
+
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<script>  
+  // YOUR PHONE NUMBER IN INTERNATIONAL FORMAT  
+  const WHATSAPP_NUMBER = "2347071839581"; 
+  
+  // SHOPPING CART STATE  
+  let cart = [];  
+  let activeCategory = "all";
+
+  // YOUR PRODUCT LIST  
+  const products = [    
+    {      
+      id: 1,      
+      category: "new-balance",      
+      pinned: true,      
+      name: "HIGH QUALITY NEW BALANCE SNEAKERS",      
+      price: 85000,      
+      caption: "HIGH QUALITY NEW BALANCE SNEAKERS - Premium Build & Comfort.",      
+      images: ["https://res.cloudinary.com/vpgritcv/image/upload/v1788818614/WhatsApp_Image_2026-09-07_at_14.50.02.jpg"],      
+      sizes: ["40", "41", "42", "43", "44", "45"]    
+    },    
+    {      
+      id: 2,      
+      category: "new-balance",      
+      pinned: false,      
+      name: "HIGH QUALITY NEW BALANCE SNEAKERS",      
+      price: 85000,      
+      caption: "HIGH QUALITY NEW BALANCE SNEAKERS - Premium Build & Comfort.",      
+      images: ["https://res.cloudinary.com/vpgritcv/image/upload/v1788818614/WhatsApp_Image_2026-09-07_at_14.50.14_1.jpg"],      
+      sizes: ["40", "41", "42", "43", "44", "45"]    
+    },    
+    {      
+      id: 3,      
+      category: "new-balance",      
+      pinned: false,      
+      name: "HIGH QUALITY NEW BALANCE SNEAKERS",      
+      price: 85000,      
+      caption: "HIGH QUALITY NEW BALANCE SNEAKERS - Premium Build & Comfort.",      
+      images: ["https://res.cloudinary.com/vpgritcv/image/upload/v1788818613/WhatsApp_Image_2026-09-07_at_14.50.12.jpg"],      
+      sizes: ["40", "41", "42", "43", "44", "45"]    
+    },    
+    {      
+      id: 4,      
+      category: "new-balance",      
+      pinned: false,      
+      name: "HIGH QUALITY NEW BALANCE SNEAKERS",      
+      price: 85000,      
+      caption: "HIGH QUALITY NEW BALANCE SNEAKERS - Premium Build & Comfort.",      
+      images: ["https://res.cloudinary.com/vpgritcv/image/upload/v1788818613/WhatsApp_Image_2026-09-07_at_14.50.03.jpg"],      
+      sizes: ["40", "41", "42", "43", "44", "45"]    
+    },    
+    {      
+      id: 5,      
+      category: "new-balance",      
+      pinned: false,      
+      name: "HIGH QUALITY NEW BALANCE SNEAKERS",      
+      price: 85000,      
+      caption: "HIGH QUALITY NEW BALANCE SNEAKERS - Premium Build & Comfort.",      
+      images: ["https://res.cloudinary.com/vpgritcv/image/upload/v1788818609/WhatsApp_Image_2026-09-07_at_14.50.12_1.jpg"],      
+      sizes: ["40", "41", "42", "43", "44", "45"]    
+    }  
   ];
 
-  const WHATSAPP_PHONE = "1234567890"; // Put your phone number with country code here
-  let activeCategory = 'all';
-  const selectedSizes = {};
+  // Render all products  
+  function renderProducts() {    
+    const feedContainer = document.getElementById("feed-container");    
+    feedContainer.innerHTML = "";
 
-  // Render Product Feed
-  function renderProducts() {
-    const feed = document.getElementById('product-feed');
-    feed.innerHTML = '';
+    // SORT PRODUCTS: Pinned items are sorted to the front of the list    
+    const sortedProducts = [...products].sort((a, b) => (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0));
 
-    products.forEach(product => {
-      selectedSizes[product.id] = product.sizes[0]; // Set default size
+    sortedProducts.forEach((product) => {      
+      const slidesHtml = product.images        
+        .map(mediaUrl => {          
+          const isVideo = mediaUrl.endsWith('.mp4') || mediaUrl.includes('/video/upload/');
 
-      const post = document.createElement('article');
-      post.className = 'post';
-      post.setAttribute('data-category', product.category);
-      post.setAttribute('data-product', product.keywords.toLowerCase());
+          if (isVideo) {            
+            return `              
+              <div class="swiper-slide">                
+                <div class="video-container">                  
+                  <video src="${mediaUrl}" autoplay loop muted playsinline style="width:100%; height:100%; object-fit:cover;"></video>                  
+                  <button class="audio-toggle-btn" onclick="event.stopPropagation(); toggleAudio(this)" aria-label="Toggle Sound">                    
+                    <svg class="icon-muted" width="16" height="16" fill="currentColor" viewBox="0 0 24 24">                      
+                      <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73 4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>                    
+                    </svg>                    
+                    <svg class="icon-unmuted" width="16" height="16" fill="currentColor" viewBox="0 0 24 24" style="display: none;">                      
+                      <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>                    
+                    </svg>                  
+                  </button>                
+                </div>              
+              </div>`;          
+          } else {            
+            return `              
+              <div class="swiper-slide">                
+                <img src="${mediaUrl}" alt="${product.name}">              
+              </div>`;          
+          }        
+        })        
+        .join("");
 
-      const slidesHtml = product.images.map(img => `
-        <div class="carousel-slide"><img src="${img}" alt="${product.name}"></div>
-      `).join('');
+      const sizesHtml = product.sizes        
+        .map(size => `<option value="${size}">Size ${size}</option>`)        
+        .join("");
 
-      const sizeChipsHtml = product.sizes.map((size, index) => `
-        <button class="size-chip ${index === 0 ? 'selected' : ''}" 
-          onclick="selectSize(${product.id}, ${size}, this)">${size}</button>
-      `).join('');
+      // PIN BADGE HTML FOR FEED & GRID VIEWS      
+      const pinHeaderBadge = product.pinned ? `<div class="pin-badge">📌 Pinned</div>` : ``;      
+      const gridPinBadge = product.pinned ? `<div class="grid-pin-badge">📌</div>` : ``;
 
-      post.innerHTML = `
-        <div class="carousel-container" id="carousel-${product.id}">
-          <div class="carousel-track">${slidesHtml}</div>
-        </div>
-        <div class="post-content">
-          <h2 class="post-title">${product.name}</h2>
-          <div class="post-price">${product.price}</div>
-          <div class="size-label">Select Size (EU)</div>
-          <div class="size-options">${sizeChipsHtml}</div>
-          <button class="whatsapp-btn" onclick="orderOnWhatsApp(${product.id})">Order on WhatsApp</button>
-        </div>
+      const postHtml = `        
+        <div class="post" data-category="${product.category}" onclick="handlePostClick(this)" data-product="${product.name.toLowerCase()} ${product.caption.toLowerCase()}">          
+          ${gridPinBadge}          
+          <div class="post-header">            
+            <div class="avatar"></div>            
+            <div class="username">kicks_store</div>            
+            ${pinHeaderBadge}          
+          </div>                    
+          <div class="swiper post-carousel">            
+            <div class="swiper-wrapper">              
+              ${slidesHtml}            
+            </div>            
+            <div class="swiper-pagination"></div>            
+            <div class="swiper-button-next"></div>            
+            <div class="swiper-button-prev"></div>          
+          </div>                    
+          <div class="post-content">            
+            <div class="price-tag">₦ ${product.price.toLocaleString()}</div>            
+            <div class="caption">              
+              <span>kicks_store</span> ${product.caption}            
+            </div>                        
+            <div class="size-picker">              
+              <label for="size-${product.id}">Select Size:</label>              
+              <select id="size-${product.id}">                
+                ${sizesHtml}              
+              </select>            
+            </div>
+
+            <div class="post-actions">              
+              <button class="btn-add-cart" onclick="event.stopPropagation(); addToCart(${product.id}, 'size-${product.id}')">                
+                Add to Cart              
+              </button>
+
+              <button class="btn-whatsapp" onclick="event.stopPropagation(); orderSingleWhatsapp(${product.id}, 'size-${product.id}')">                
+                Buy Direct              
+              </button>            
+            </div>          
+          </div>        
+        </div>      
       `;
-
-      feed.appendChild(post);
-      initSwipe(`carousel-${product.id}`);
+      feedContainer.insertAdjacentHTML("beforeend", postHtml);    
     });
+
+    // Initialize Swiper    
+    new Swiper('.post-carousel', {      
+      loop: false,      
+      pagination: { el: '.swiper-pagination', clickable: true },      
+      navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },    
+    });  
   }
 
-  // Size Selector Logic
-  function selectSize(productId, size, element) {
-    selectedSizes[productId] = size;
-    const parentContainer = element.parentElement;
-    parentContainer.querySelectorAll('.size-chip').forEach(btn => btn.classList.remove('selected'));
-    element.classList.add('selected');
+  // --- CATEGORY FILTER FUNCTION ---  
+  function filterByCategory(categoryKey, btnElement) {    
+    activeCategory = categoryKey;
+
+    // Update active pill styling    
+    document.querySelectorAll('.category-chip').forEach(chip => chip.classList.remove('active'));    
+    if (btnElement) btnElement.classList.add('active');
+
+    filterPosts();  
   }
 
-  // WhatsApp Redirect
-  function orderOnWhatsApp(productId) {
+  // --- CART FUNCTIONS ---  
+  function addToCart(productId, sizeSelectId) {    
+    const selectedSize = document.getElementById(sizeSelectId).value;    
     const product = products.find(p => p.id === productId);
-    const size = selectedSizes[productId];
-    const message = encodeURIComponent(
-      `Hello! I would like to order:\n\n*Product:* ${product.name}\n*Size:* EU ${size}\n*Price:* ${product.price}\n*Link:* ${product.images[0]}`
-    );
-    window.open(`https://wa.me/${WHATSAPP_PHONE}?text=${message}`, '_blank');
+
+    const existingIndex = cart.findIndex(item => item.id === productId && item.size === selectedSize);
+
+    if (existingIndex > -1) {      
+      cart[existingIndex].quantity += 1;    
+    } else {      
+      cart.push({        
+        id: product.id,        
+        name: product.name,        
+        price: product.price,        
+        size: selectedSize,        
+        image: product.images[0] || "",        
+        quantity: 1      
+      });    
+    }
+
+    updateCartUI();    
+    alert(`Added ${product.name} (Size ${selectedSize}) to your cart!`);  
   }
 
-  // Touch & Swipe Support for Carousels
-  function initSwipe(containerId) {
-    const container = document.getElementById(containerId);
-    const track = container.querySelector('.carousel-track');
-    const slides = container.querySelectorAll('.carousel-slide');
-    let currentIndex = 0;
-    let startX = 0;
-    let currentTranslate = 0;
-    let prevTranslate = 0;
-    let isDragging = false;
+  // DIRECT SINGLE ITEM ORDER: Opens WhatsApp immediately with Image Link
+  function orderSingleWhatsapp(productId, sizeSelectId) {    
+    const selectedSize = document.getElementById(sizeSelectId).value;    
+    const product = products.find(p => p.id === productId);
+    const imageUrl = product.images[0] || "";
 
-    container.addEventListener('touchstart', e => {
-      startX = e.touches[0].clientX;
-      isDragging = true;
-    });
-
-    container.addEventListener('touchmove', e => {
-      if (!isDragging) return;
-      const currentX = e.touches[0].clientX;
-      const diff = currentX - startX;
-      currentTranslate = prevTranslate + diff;
-      track.style.transform = `translateX(${currentTranslate}px)`;
-    });
-
-    container.addEventListener('touchend', () => {
-      isDragging = false;
-      const movedBy = currentTranslate - prevTranslate;
-
-      if (movedBy < -50 && currentIndex < slides.length - 1) currentIndex++;
-      if (movedBy > 50 && currentIndex > 0) currentIndex--;
-
-      prevTranslate = -currentIndex * container.offsetWidth;
-      track.style.transform = `translateX(${prevTranslate}px)`;
-    });
+    const message = `Hello, I want to order the following sneaker:\n\n` +                    
+                    `👟 *Item:* ${product.name}\n` +                    
+                    `💰 *Price:* ₦${product.price.toLocaleString()}\n` +                    
+                    `📏 *Size:* ${selectedSize}\n` +                    
+                    `🖼️ *Product Link:* ${imageUrl}\n\n` +                    
+                    `Please let me know how to proceed with payment and delivery.`;
+                        
+    window.location.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;  
   }
 
-  // Category & Navigation Controls
-  function setCategory(category, element) {
-    activeCategory = category;
-    document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
-    element.classList.add('active');
-    filterPosts();
+  function removeFromCart(index) {    
+    cart.splice(index, 1);    
+    updateCartUI();  
   }
 
-  function toggleSearchBar() {
-    const searchBar = document.getElementById('search-bar');
+  function updateCartUI() {    
+    const badge = document.getElementById('cart-badge');    
+    const container = document.getElementById('cart-items-container');    
+    const totalElem = document.getElementById('cart-total-price');
+
+    const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);    
+    const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+
+    // Update Badge    
+    if (totalCount > 0) {      
+      badge.textContent = totalCount;      
+      badge.style.display = 'flex';    
+    } else {      
+      badge.style.display = 'none';    
+    }
+
+    // Render Cart Modal Items    
+    if (cart.length === 0) {      
+      container.innerHTML = `<p style="text-align:center; color:#8e8e8e; padding: 20px 0;">Your cart is empty.</p>`;      
+      document.getElementById('delivery-form').style.display = 'none';    
+    } else {      
+      document.getElementById('delivery-form').style.display = 'block';      
+      container.innerHTML = cart.map((item, index) => `        
+        <div class="cart-item">          
+          <div class="cart-item-info">            
+            <p>${item.name}</p>            
+            <span>Size: ${item.size} | Qty: ${item.quantity} | ₦ ${(item.price * item.quantity).toLocaleString()}</span>          
+          </div>          
+          <button class="cart-item-remove" onclick="removeFromCart(${index})">Remove</button>        
+        </div>      
+      `).join('');    
+    }
+
+    totalElem.textContent = `₦ ${totalPrice.toLocaleString()}`;  
+  }
+
+  function toggleCartModal() {    
+    const modal = document.getElementById('cart-modal');    
+    modal.style.display = (modal.style.display === 'flex') ? 'none' : 'flex';  
+  }
+
+  function closeCartOnOutsideClick(e) {    
+    if (e.target.id === 'cart-modal') {      
+      toggleCartModal();    
+    }  
+  }
+
+  // Multi-item Checkout via WhatsApp with Image Links
+  function checkoutCartViaWhatsapp() {    
+    if (cart.length === 0) {      
+      alert("Your cart is empty!");      
+      return;    
+    }
+
+    const name = document.getElementById('cust-name').value.trim();    
+    const phone = document.getElementById('cust-phone').value.trim();    
+    const address = document.getElementById('cust-address').value.trim();
+
+    if (!name || !phone || !address) {      
+      alert("Please fill in your Name, Phone Number, and Delivery Address before checking out.");      
+      return;    
+    }
+
+    let itemsList = cart.map((item, i) => 
+      `${i + 1}. *${item.name}*\n   Size: ${item.size} | Qty: ${item.quantity} | Price: ₦${(item.price * item.quantity).toLocaleString()}\n   Link: ${item.image}`
+    ).join('\n\n');    
+    
+    const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+
+    const message = `🚨 *NEW CART ORDER PLACED* 🚨\n\n` +                    
+                    `👤 *Customer Name:* ${name}\n` +                    
+                    `📞 *Calling Phone:* ${phone}\n` +                    
+                    `📍 *Delivery Address:* ${address}\n\n` +                    
+                    `📦 *ORDER DETAILS:*\n` +                    
+                    `${itemsList}\n\n` +                    
+                    `💰 *TOTAL AMOUNT:* ₦${totalPrice.toLocaleString()}\n\n` +                    
+                    `Please confirm availability and payment options for delivery.`;
+
+    window.location.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;  
+  }
+
+  // Toggle Video Sound  
+  function toggleAudio(buttonElement) {    
+    const video = buttonElement.previousElementSibling;    
+    const iconMuted = buttonElement.querySelector('.icon-muted');    
+    const iconUnmuted = buttonElement.querySelector('.icon-unmuted');
+
+    if (video.muted) {      
+      video.muted = false;      
+      iconMuted.style.display = 'none';      
+      iconUnmuted.style.display = 'block';    
+    } else {      
+      video.muted = true;      
+      iconMuted.style.display = 'block';      
+      iconUnmuted.style.display = 'none';    
+    }  
+  }
+
+  // Click on a grid item to expand feed mode  
+  function handlePostClick(element) {    
+    const container = document.getElementById('feed-container');    
+    const backBtn = document.getElementById('back-grid-btn');
+
+    if (container.classList.contains('grid-mode')) {      
+      container.classList.remove('grid-mode');      
+      container.classList.add('feed-mode');      
+      backBtn.style.display = 'flex';            
+      setTimeout(() => {        
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });      
+      }, 50);    
+    }  
+  }
+
+  // Return to Grid View  
+  function switchToGridMode() {    
+    const container = document.getElementById('feed-container');    
+    const backBtn = document.getElementById('back-grid-btn');
+
+    container.classList.remove('feed-mode');    
+    container.classList.add('grid-mode');    
+    backBtn.style.display = 'none';        
+    window.scrollTo({ top: 0, behavior: 'smooth' });    
+    setActiveNav('nav-home');  
+  }
+
+  // Search Functions  
+  function toggleSearchBar() {    
+    const searchBar = document.getElementById('search-bar');    
     const searchInput = document.getElementById('search-input');    
     const isSearchActive = searchBar.classList.contains('active');
 
@@ -232,17 +644,6 @@
   function setActiveNav(navId) {    
     document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));    
     document.getElementById(navId).classList.add('active');  
-  }
-
-  function resetView() {
-    document.getElementById('search-bar').classList.remove('active');
-    document.getElementById('search-input').value = '';
-    activeCategory = 'all';
-    document.querySelectorAll('.category-btn').forEach((btn, idx) => {
-      btn.classList.toggle('active', idx === 0);
-    });
-    setActiveNav('nav-home');
-    filterPosts();
   }
 
   function filterPosts() {    
@@ -268,8 +669,10 @@
     document.getElementById('no-results').style.display = visibleCount === 0 ? 'block' : 'none';  
   }
 
-  // Run on initial load
+  // Initial Run  
   renderProducts();
 </script>
+
+<script async src="/.netlify/scripts/hud?variant=public" data-nf-variant="public" data-netlify-site-id="b5f51b36-cd0d-4e5c-9ac9-8f94578f0456" data-app-host="app.netlify.com"></script>
 </body>
 </html>

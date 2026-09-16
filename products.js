@@ -1,6 +1,7 @@
-// YOUR PHONE NUMBER IN INTERNATIONAL FORMAT  
+// STORE CONTACT DETAILS  
 const WHATSAPP_NUMBER = "2347071839581"; 
- 
+const INSTAGRAM_HANDLE = "shakaman_stores"; // Updated to your exact Instagram handle
+
 // SHOPPING CART STATE  
 let cart = [];  
 let activeCategory = "all";
@@ -109,7 +110,7 @@ function renderProducts() {
         ${gridPinBadge}          
         <div class="post-header">            
           <div class="avatar"></div>            
-          <div class="username">kicks_store</div>            
+          <div class="username">shakaman_stores</div>            
           ${pinHeaderBadge}          
         </div>                    
         <div class="swiper post-carousel">            
@@ -123,7 +124,7 @@ function renderProducts() {
         <div class="post-content">            
           <div class="price-tag">₦ ${product.price.toLocaleString()}</div>            
           <div class="caption">              
-            <span>kicks_store</span> ${product.caption}            
+            <span>shakaman_stores</span> ${product.caption}            
           </div>                        
           <div class="size-picker">              
             <label for="size-${product.id}">Select Size:</label>              
@@ -138,7 +139,11 @@ function renderProducts() {
             </button>
 
             <button class="btn-whatsapp" onclick="event.stopPropagation(); orderSingleWhatsapp(${product.id}, 'size-${product.id}')">                
-              Buy Direct              
+              WhatsApp              
+            </button>
+
+            <button class="btn-instagram" onclick="event.stopPropagation(); orderSingleInstagram(${product.id}, 'size-${product.id}')">                
+              Instagram DM              
             </button>            
           </div>          
         </div>        
@@ -159,7 +164,6 @@ function renderProducts() {
 function filterByCategory(categoryKey, btnElement) {    
   activeCategory = categoryKey;
 
-  // Update active pill styling    
   document.querySelectorAll('.category-chip').forEach(chip => chip.classList.remove('active'));    
   if (btnElement) btnElement.classList.add('active');
 
@@ -190,7 +194,7 @@ function addToCart(productId, sizeSelectId) {
   alert(`Added ${product.name} (Size ${selectedSize}) to your cart!`);  
 }
 
-// DIRECT SINGLE ITEM ORDER: Opens WhatsApp immediately with Image Link
+// DIRECT SINGLE ITEM ORDER VIA WHATSAPP
 function orderSingleWhatsapp(productId, sizeSelectId) {    
   const selectedSize = document.getElementById(sizeSelectId).value;    
   const product = products.find(p => p.id === productId);
@@ -206,6 +210,27 @@ function orderSingleWhatsapp(productId, sizeSelectId) {
   window.location.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;  
 }
 
+// DIRECT SINGLE ITEM ORDER VIA INSTAGRAM DM
+function orderSingleInstagram(productId, sizeSelectId) {
+  const selectedSize = document.getElementById(sizeSelectId).value;
+  const product = products.find(p => p.id === productId);
+  const imageUrl = product.images[0] || "";
+
+  const message = `Hello, I want to order this item:\n\n` +
+                  `👟 Item: ${product.name}\n` +
+                  `💰 Price: ₦${product.price.toLocaleString()}\n` +
+                  `📏 Size: ${selectedSize}\n` +
+                  `🖼️ Link: ${imageUrl}`;
+
+  navigator.clipboard.writeText(message).then(() => {
+    alert("Order details copied to clipboard! Opening Instagram DM...");
+    window.location.href = `https://ig.me/m/${INSTAGRAM_HANDLE}`;
+  }).catch(() => {
+    alert("Opening Instagram DM...");
+    window.location.href = `https://ig.me/m/${INSTAGRAM_HANDLE}`;
+  });
+}
+
 function removeFromCart(index) {    
   cart.splice(index, 1);    
   updateCartUI();  
@@ -219,7 +244,6 @@ function updateCartUI() {
   const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);    
   const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
 
-  // Update Badge    
   if (totalCount > 0) {      
     badge.textContent = totalCount;      
     badge.style.display = 'flex';    
@@ -227,7 +251,6 @@ function updateCartUI() {
     badge.style.display = 'none';    
   }
 
-  // Render Cart Modal Items    
   if (cart.length === 0) {      
     container.innerHTML = `<p style="text-align:center; color:#8e8e8e; padding: 20px 0;">Your cart is empty.</p>`;      
     document.getElementById('delivery-form').style.display = 'none';    
@@ -258,7 +281,7 @@ function closeCartOnOutsideClick(e) {
   }  
 }
 
-// Multi-item Checkout via WhatsApp with Image Links
+// Multi-item Checkout via WhatsApp
 function checkoutCartViaWhatsapp() {    
   if (cart.length === 0) {      
     alert("Your cart is empty!");      
@@ -292,6 +315,44 @@ function checkoutCartViaWhatsapp() {
   window.location.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;  
 }
 
+// Multi-item Checkout via Instagram DM
+function checkoutCartViaInstagram() {
+  if (cart.length === 0) {
+    alert("Your cart is empty!");
+    return;
+  }
+
+  const name = document.getElementById('cust-name').value.trim();
+  const phone = document.getElementById('cust-phone').value.trim();
+  const address = document.getElementById('cust-address').value.trim();
+
+  if (!name || !phone || !address) {
+    alert("Please fill in your Name, Phone Number, and Delivery Address.");
+    return;
+  }
+
+  let itemsList = cart.map((item, i) => 
+    `${i + 1}. ${item.name} | Size: ${item.size} | Qty: ${item.quantity} | ₦${(item.price * item.quantity).toLocaleString()}\nLink: ${item.image}`
+  ).join('\n\n');
+  
+  const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+
+  const message = `🚨 NEW INSTAGRAM CART ORDER 🚨\n\n` +
+                  `👤 Name: ${name}\n` +
+                  `📞 Phone: ${phone}\n` +
+                  `📍 Address: ${address}\n\n` +
+                  `📦 ORDER:\n${itemsList}\n\n` +
+                  `💰 TOTAL: ₦${totalPrice.toLocaleString()}`;
+
+  navigator.clipboard.writeText(message).then(() => {
+    alert("Order details copied! Opening Instagram DM to paste...");
+    window.location.href = `https://ig.me/m/${INSTAGRAM_HANDLE}`;
+  }).catch(() => {
+    alert("Opening Instagram DM...");
+    window.location.href = `https://ig.me/m/${INSTAGRAM_HANDLE}`;
+  });
+}
+
 // Toggle Video Sound  
 function toggleAudio(buttonElement) {    
   const video = buttonElement.previousElementSibling;    
@@ -309,7 +370,7 @@ function toggleAudio(buttonElement) {
   }  
 }
 
-// Click on a grid item to expand feed mode  
+// Expand Feed View from Grid Click
 function handlePostClick(element) {    
   const container = document.getElementById('feed-container');    
   const backBtn = document.getElementById('back-grid-btn');
@@ -354,7 +415,6 @@ function toggleSearchBar() {
   }  
 }
 
-// Navigation Tab State Toggle
 function setActiveNav(navId) {    
   document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));    
   document.getElementById(navId).classList.add('active');  

@@ -6,7 +6,7 @@
   <meta name="hosting-provider" content="Netlify">
   <meta name="netlify-deploy" content="https://netlify.new/?utm_campaign=ai-legible&amp;utm_source=meta&amp;utm_medium=referral&amp;utm_id=b5f51b36-cd0d-4e5c-9ac9-8f94578f0456">  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">  
-  <title>Kicks Store</title>
+  <title>Shakaman Stores</title>
   
   <!-- Swiper CSS -->  
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
@@ -30,12 +30,12 @@
       padding: 10px 16px;      
       background: #ffffff;      
       border-bottom: 1px solid #dbdbdb;      
-      scrollbar-width: none; /* Firefox */      
+      scrollbar-width: none;      
       position: sticky;      
       top: 50px;      
       z-index: 9;    
     }    
-    .categories-bar::-webkit-scrollbar { display: none; } /* Chrome, Safari */        
+    .categories-bar::-webkit-scrollbar { display: none; }        
     .category-chip {      
       background: #efefef;      
       border: 1px solid #dbdbdb;      
@@ -71,7 +71,6 @@
     .grid-mode .post { margin-bottom: 0; border: none; background: #fff; cursor: pointer; aspect-ratio: 1 / 1; position: relative; }    
     .grid-mode .swiper { height: 100%; pointer-events: none; }        
     
-    /* Pin Badge Icon in Grid Mode */    
     .grid-pin-badge {      
       position: absolute;      
       top: 6px;      
@@ -91,7 +90,6 @@
     .feed-mode .avatar { width: 32px; height: 32px; border-radius: 50%; background: #000; margin-right: 10px; }    
     .feed-mode .username { font-weight: 600; font-size: 14px; }        
     
-    /* Pinned Badge in Feed Header */    
     .pin-badge {      
       margin-left: auto;      
       font-size: 11px;      
@@ -113,7 +111,6 @@
     .swiper-pagination-bullet-active { background: #0095f6; opacity: 1; }    
     .swiper-button-next, .swiper-button-prev { color: rgba(255, 255, 255, 0.8); transform: scale(0.6); }
     
-    /* Video Sound Toggle Button */    
     .video-container { position: relative; width: 100%; height: 100%; }    
     .audio-toggle-btn {      
       position: absolute;      
@@ -144,19 +141,17 @@
     .size-picker select { padding: 6px 10px; border-radius: 6px; border: 1px solid #ccc; font-size: 14px; outline: none; }        
     
     /* Action Buttons Area */    
-    .post-actions { display: flex; gap: 8px; }    
-    .btn-add-cart { flex: 1; background-color: #262626; color: white; border: none; padding: 10px; border-radius: 8px; font-weight: 600; font-size: 13px; cursor: pointer; }    
-    .btn-add-cart:active { opacity: 0.8; }        
+    .post-actions { display: flex; gap: 6px; }    
+    .btn-add-cart { flex: 1; background-color: #262626; color: white; border: none; padding: 10px 4px; border-radius: 8px; font-weight: 600; font-size: 12px; cursor: pointer; }    
+    .btn-whatsapp { flex: 1; background-color: #25D366; color: white; border: none; padding: 10px 4px; border-radius: 8px; font-weight: 600; font-size: 12px; cursor: pointer; }    
+    .btn-instagram { flex: 1; background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); color: white; border: none; padding: 10px 4px; border-radius: 8px; font-weight: 600; font-size: 12px; cursor: pointer; }    
+    .btn-add-cart:active, .btn-whatsapp:active, .btn-instagram:active { opacity: 0.8; }
     
-    .btn-whatsapp { flex: 1.2; background-color: #25D366; color: white; border: none; padding: 10px; border-radius: 8px; font-weight: 600; font-size: 13px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px; text-decoration: none; }    
-    .btn-whatsapp:active { opacity: 0.9; }
-    
-    /* Bottom Sticky Navigation */    
+    /* Bottom Navigation */    
     .bottom-nav { position: fixed; bottom: 0; width: 100%; max-width: 470px; height: 50px; background: #ffffff; border-top: 1px solid #dbdbdb; display: flex; justify-content: space-around; align-items: center; z-index: 100; }    
     .nav-item { display: flex; align-items: center; justify-content: center; color: #262626; text-decoration: none; position: relative; background: none; border: none; cursor: pointer; width: 33.33%; height: 100%; }    
     .nav-item.active svg { fill: #000; }        
     
-    /* Cart Badge Icon */    
     .cart-badge { position: absolute; top: 6px; right: 32px; background: #ff3040; color: #fff; font-size: 11px; font-weight: 700; width: 18px; height: 18px; border-radius: 50%; display: none; align-items: center; justify-content: center; }
     
     #no-results { display: none; text-align: center; padding: 40px 16px; color: #8e8e8e; font-size: 14px; }
@@ -174,16 +169,17 @@
     .cart-item-info span { font-size: 12px; color: #666; }    
     .cart-item-remove { background: #ffebeb; color: #ff3040; border: none; padding: 4px 8px; border-radius: 4px; font-size: 12px; cursor: pointer; }        
     
-    /* Form Inputs */    
     .delivery-form { margin-top: 10px; padding-top: 12px; border-top: 1px solid #dbdbdb; }    
     .delivery-form h3 { font-size: 14px; font-weight: 700; margin-bottom: 10px; color: #111; }    
     .form-group { margin-bottom: 10px; }    
     .form-group label { display: block; font-size: 12px; font-weight: 600; color: #666; margin-bottom: 4px; }    
     .form-group input, .form-group textarea { width: 100%; padding: 8px 10px; border: 1px solid #dbdbdb; border-radius: 6px; font-size: 13px; outline: none; background: #fafafa; }    
     .form-group input:focus, .form-group textarea:focus { background: #fff; border-color: #a8a8a8; }        
+    
     .cart-footer { border-top: 1px solid #dbdbdb; padding-top: 12px; margin-top: 8px; }    
     .cart-total { display: flex; justify-content: space-between; font-weight: 700; font-size: 16px; margin-bottom: 12px; }    
-    .btn-checkout-whatsapp { width: 100%; background-color: #25D366; color: white; border: none; padding: 12px; border-radius: 8px; font-weight: 700; font-size: 15px; cursor: pointer; }  
+    .btn-checkout-whatsapp { flex: 1; background-color: #25D366; color: white; border: none; padding: 12px 6px; border-radius: 8px; font-weight: 700; font-size: 13px; cursor: pointer; }  
+    .btn-checkout-instagram { flex: 1; background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); color: white; border: none; padding: 12px 6px; border-radius: 8px; font-weight: 700; font-size: 13px; cursor: pointer; }  
   </style>
 </head>
 <body>
@@ -191,9 +187,8 @@
 <div class="app-container">  
   <!-- Top Header -->  
   <div class="header">    
-    <h1>KicksStore</h1>    
+    <h1>shakaman_stores</h1>    
     <div class="header-actions">      
-      <!-- Back to Grid Button -->      
       <button class="back-btn" id="back-grid-btn" onclick="switchToGridMode()">        
         ‹ Grid View      
       </button>            
@@ -222,11 +217,11 @@
     <input type="text" id="search-input" class="search-input" placeholder="Search sneakers..." onkeyup="filterPosts()">  
   </div>
 
-  <!-- Feed Container (Default Grid Mode) -->  
+  <!-- Feed Container -->  
   <div id="feed-container" class="grid-mode"></div>  
   <div id="no-results">No matching sneakers found in this category.</div>
 
-  <!-- Bottom Sticky Navigation Bar -->  
+  <!-- Bottom Navigation -->  
   <nav class="bottom-nav">    
     <button class="nav-item active" id="nav-home" onclick="switchToGridMode()" aria-label="Home">      
       <svg aria-label="Home" color="#262626" fill="#262626" height="24" role="img" viewBox="0 0 24 24" width="24"><path d="M22 22H2v-2h20v2zM21 10l-9-7-9 7v10h18V10z" fill-rule="evenodd"></path></svg>    
@@ -241,7 +236,7 @@
   </nav>
 </div>
 
-<!-- Shopping Cart Slide-Up Modal with Delivery Form -->
+<!-- Shopping Cart Modal -->
 <div class="cart-modal" id="cart-modal" onclick="closeCartOnOutsideClick(event)">  
   <div class="cart-content">    
     <div class="cart-header">      
@@ -249,10 +244,9 @@
       <button class="close-cart" onclick="toggleCartModal()">&times;</button>    
     </div>        
     <div class="cart-items" id="cart-items-container">      
-      <!-- Items dynamically added here -->    
+      <!-- Cart items rendered here -->    
     </div>
 
-    <!-- Delivery Form (Appears when viewing Cart) -->    
     <div class="delivery-form" id="delivery-form">      
       <h3>Delivery Details</h3>      
       <div class="form-group">        
@@ -274,14 +268,19 @@
         <span>Total Price:</span>        
         <span id="cart-total-price">₦ 0</span>      
       </div>      
-      <button class="btn-checkout-whatsapp" onclick="checkoutCartViaWhatsapp()">        
-        Send Order Details to WhatsApp      
-      </button>    
+      <div style="display: flex; gap: 8px;">
+        <button class="btn-checkout-whatsapp" onclick="checkoutCartViaWhatsapp()">        
+          Order via WhatsApp      
+        </button>    
+        <button class="btn-checkout-instagram" onclick="checkoutCartViaInstagram()">        
+          Order via Instagram      
+        </button>
+      </div>
     </div>  
   </div>
 </div>
 
-<!-- External Libraries & Products Data Script -->
+<!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script src="products.js"></script>
 <script async src="/.netlify/scripts/hud?variant=public" data-nf-variant="public" data-netlify-site-id="b5f51b36-cd0d-4e5c-9ac9-8f94578f0456" data-app-host="app.netlify.com"></script>

@@ -1,6 +1,6 @@
 // STORE CONTACT DETAILS  
 const WHATSAPP_NUMBER = "2347071839581"; 
-const INSTAGRAM_HANDLE = "shakaman_stores"; // Updated to your exact Instagram handle
+const INSTAGRAM_HANDLE = "shakaman_stores"; // Your Instagram handle
 
 // SHOPPING CART STATE  
 let cart = [];  
@@ -222,13 +222,7 @@ function orderSingleInstagram(productId, sizeSelectId) {
                   `📏 Size: ${selectedSize}\n` +
                   `🖼️ Link: ${imageUrl}`;
 
-  navigator.clipboard.writeText(message).then(() => {
-    alert("Order details copied to clipboard! Opening Instagram DM...");
-    window.location.href = `https://ig.me/m/${INSTAGRAM_HANDLE}`;
-  }).catch(() => {
-    alert("Opening Instagram DM...");
-    window.location.href = `https://ig.me/m/${INSTAGRAM_HANDLE}`;
-  });
+  copyToClipboardAndRedirect(message, `https://ig.me/m/${INSTAGRAM_HANDLE}`);
 }
 
 function removeFromCart(index) {    
@@ -315,7 +309,7 @@ function checkoutCartViaWhatsapp() {
   window.location.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;  
 }
 
-// Multi-item Checkout via Instagram DM
+// Multi-item Checkout via Instagram DM (With Clipboard Copying)
 function checkoutCartViaInstagram() {
   if (cart.length === 0) {
     alert("Your cart is empty!");
@@ -327,30 +321,60 @@ function checkoutCartViaInstagram() {
   const address = document.getElementById('cust-address').value.trim();
 
   if (!name || !phone || !address) {
-    alert("Please fill in your Name, Phone Number, and Delivery Address.");
+    alert("Please fill in your Name, Phone Number, and Delivery Address before checking out.");
     return;
   }
 
   let itemsList = cart.map((item, i) => 
-    `${i + 1}. ${item.name} | Size: ${item.size} | Qty: ${item.quantity} | ₦${(item.price * item.quantity).toLocaleString()}\nLink: ${item.image}`
+    `${i + 1}. ${item.name}\n   Size: ${item.size} | Qty: ${item.quantity} | ₦${(item.price * item.quantity).toLocaleString()}\n   Link: ${item.image}`
   ).join('\n\n');
   
   const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
 
-  const message = `🚨 NEW INSTAGRAM CART ORDER 🚨\n\n` +
+  const message = `🚨 NEW INSTAGRAM MULTI-ITEM ORDER 🚨\n\n` +
                   `👤 Name: ${name}\n` +
                   `📞 Phone: ${phone}\n` +
                   `📍 Address: ${address}\n\n` +
-                  `📦 ORDER:\n${itemsList}\n\n` +
-                  `💰 TOTAL: ₦${totalPrice.toLocaleString()}`;
+                  `📦 ITEMS ORDERED:\n${itemsList}\n\n` +
+                  `💰 TOTAL AMOUNT: ₦${totalPrice.toLocaleString()}\n\n` +
+                  `Please confirm availability and payment options.`;
 
-  navigator.clipboard.writeText(message).then(() => {
-    alert("Order details copied! Opening Instagram DM to paste...");
-    window.location.href = `https://ig.me/m/${INSTAGRAM_HANDLE}`;
-  }).catch(() => {
+  copyToClipboardAndRedirect(message, `https://ig.me/m/${INSTAGRAM_HANDLE}`);
+}
+
+// HELPER FUNCTION: COPIES ORDER TEXT TO CLIPBOARD & REDIRECTS TO INSTAGRAM
+function copyToClipboardAndRedirect(textToCopy, targetUrl) {
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(textToCopy).then(() => {
+      alert("Order details copied to clipboard! Paste it directly into your Instagram DM thread.");
+      window.location.href = targetUrl;
+    }).catch(err => {
+      fallbackCopyText(textToCopy, targetUrl);
+    });
+  } else {
+    fallbackCopyText(textToCopy, targetUrl);
+  }
+}
+
+// FALLBACK COPY FOR OLDER BROWSERS
+function fallbackCopyText(textToCopy, targetUrl) {
+  const textArea = document.createElement("textarea");
+  textArea.value = textToCopy;
+  textArea.style.position = "fixed";
+  textArea.style.left = "-999999px";
+  document.body.appendChild(textArea);
+  textArea.focus();
+  textArea.select();
+
+  try {
+    document.execCommand('copy');
+    alert("Order details copied to clipboard! Paste it directly into your Instagram DM thread.");
+  } catch (err) {
     alert("Opening Instagram DM...");
-    window.location.href = `https://ig.me/m/${INSTAGRAM_HANDLE}`;
-  });
+  }
+
+  document.body.removeChild(textArea);
+  window.location.href = targetUrl;
 }
 
 // Toggle Video Sound  

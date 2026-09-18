@@ -40,7 +40,7 @@
   
   <form id="productForm">
     <div class="form-group">
-      <label>Product ID (Auto-Calculated)</label>
+      <label>Product ID</label>
       <input type="number" id="prod-id" placeholder="Auto-calculating..." required>
       <div class="hint">Automatically detected based on your highest existing ID in products.js.</div>
     </div>
@@ -79,23 +79,23 @@
 
     <!-- Cloudinary Links Section -->
     <div class="form-group">
-      <label>Cloudinary Image / Video Links (Up to 100)</label>
+      <label>Cloudinary Image / Video Links</label>
       <div id="image-inputs-container" class="image-inputs-container">
-        <!-- Initial 5 Inputs -->
-        <div class="image-input-wrapper"><span>Link 1:</span><input type="url" class="cloudinary-link" placeholder="https://res.cloudinary.com/..."></div>
-        <div class="image-input-wrapper"><span>Link 2:</span><input type="url" class="cloudinary-link" placeholder="https://res.cloudinary.com/..."></div>
-        <div class="image-input-wrapper"><span>Link 3:</span><input type="url" class="cloudinary-link" placeholder="https://res.cloudinary.com/..."></div>
-        <div class="image-input-wrapper"><span>Link 4:</span><input type="url" class="cloudinary-link" placeholder="https://res.cloudinary.com/..."></div>
-        <div class="image-input-wrapper"><span>Link 5:</span><input type="url" class="cloudinary-link" placeholder="https://res.cloudinary.com/..."></div>
+        <!-- Initial 5 Inputs using type="text" to prevent URL validation locks -->
+        <div class="image-input-wrapper"><span>Link 1:</span><input type="text" class="cloudinary-link" placeholder="https://res.cloudinary.com/..."></div>
+        <div class="image-input-wrapper"><span>Link 2:</span><input type="text" class="cloudinary-link" placeholder="https://res.cloudinary.com/..."></div>
+        <div class="image-input-wrapper"><span>Link 3:</span><input type="text" class="cloudinary-link" placeholder="https://res.cloudinary.com/..."></div>
+        <div class="image-input-wrapper"><span>Link 4:</span><input type="text" class="cloudinary-link" placeholder="https://res.cloudinary.com/..."></div>
+        <div class="image-input-wrapper"><span>Link 5:</span><input type="text" class="cloudinary-link" placeholder="https://res.cloudinary.com/..."></div>
       </div>
       <button type="button" class="btn-add-link" onclick="addImageInput()">+ Add More Image Links</button>
-      <div class="hint">Fill in as many image links as you need. Empty link fields are automatically ignored.</div>
+      <div class="hint">Fill in as many image links as you need. Empty fields will be ignored.</div>
     </div>
 
     <div class="form-group">
       <label>Available Sizes</label>
       <input type="text" id="prod-sizes" value="40, 41, 42, 43, 44, 45" required>
-      <div class="hint">Separate sizes with commas (e.g. 40, 41, 42, 43, 44, 45)</div>
+      <div class="hint">Separate sizes with commas</div>
     </div>
 
     <div class="form-group">
@@ -107,7 +107,7 @@
       <input type="checkbox" id="prod-pinned" style="display:none;">
     </div>
 
-    <button type="submit" class="btn-submit">Generate Product Code</button>
+    <button type="button" class="btn-submit" onclick="runGenerator()">Generate Product Code</button>
   </form>
 
   <div id="instructions">
@@ -115,9 +115,8 @@
     <ol style="margin: 8px 0 0 0; padding-left: 20px;">
       <li>Click the <strong>Copy Code</strong> button below.</li>
       <li>Open your <code>products.js</code> file.</li>
-      <li>Find <code>const products = [</code> at the top.</li>
-      <li>Paste the code inside the array.</li>
-      <li>Save <code>products.js</code> and refresh your website!</li>
+      <li>Paste the code inside your <code>products</code> array.</li>
+      <li>Save and refresh your site!</li>
     </ol>
   </div>
 
@@ -135,7 +134,7 @@
 
   function addImageInput() {
     if (imageCount >= maxImages) {
-      alert("You have reached the maximum limit of 100 image links.");
+      alert("Maximum limit of 100 image links reached.");
       return;
     }
     
@@ -146,29 +145,31 @@
       
       const wrapper = document.createElement('div');
       wrapper.className = 'image-input-wrapper';
-      wrapper.innerHTML = `<span>Link ${imageCount}:</span><input type="url" class="cloudinary-link" placeholder="https://res.cloudinary.com/...">`;
+      wrapper.innerHTML = `<span>Link ${imageCount}:</span><input type="text" class="cloudinary-link" placeholder="https://res.cloudinary.com/...">`;
       container.appendChild(wrapper);
     }
   }
 
-  // Sync pinned selection dropdown with checkbox
+  // Synchronize pin selection
   document.getElementById('prod-pinned-select').addEventListener('change', function() {
     document.getElementById('prod-pinned').checked = (this.value === 'true');
   });
 
-  // Handle Form Submission Directly
-  document.getElementById('productForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-
-    // Call generateProductCode from admin.js directly
-    generateProductCode();
-
-    // Show output controls and scroll into view
-    document.getElementById('instructions').style.display = 'block';
-    const copyBtn = document.getElementById('copyBtn');
-    copyBtn.style.display = 'block';
-    document.getElementById('code-output').scrollIntoView({ behavior: 'smooth' });
-  });
+  // Explicit generator trigger function
+  function runGenerator() {
+    if (typeof generateProductCode === "function") {
+      generateProductCode();
+      
+      const codeOutput = document.getElementById('code-output');
+      if (codeOutput && codeOutput.value.trim().length > 0) {
+        document.getElementById('instructions').style.display = 'block';
+        document.getElementById('copyBtn').style.display = 'block';
+        codeOutput.scrollIntoView({ behavior: 'smooth' });
+      }
+    } else {
+      alert("Error: generateProductCode function not found. Check if admin.js is linked correctly.");
+    }
+  }
 </script>
 
 </body>

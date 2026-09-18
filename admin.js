@@ -38,27 +38,30 @@ document.getElementById('productForm').addEventListener('submit', function (e) {
     .map(size => size.trim())
     .filter(size => size.length > 0);
 
-  // Build object structure matching products.js
-  const productObject = {
-    id: id,
-    category: category,
-    pinned: pinned,
-    name: name,
-    price: price,
-    caption: caption,
-    images: images,
-    sizes: sizes
-  };
+  // Format images array string
+  const formattedImages = JSON.stringify(images, null, 2).replace(/\n/g, '\n    ');
 
-  // Format object into JS string
-  const formattedJs = JSON.stringify(productObject, null, 2);
+  // Format sizes array string
+  const formattedSizes = JSON.stringify(sizes);
+
+  // Build exact JavaScript format (without quotes around keys)
+  const formattedJsCode = `  {\n` +
+    `    id: ${id},\n` +
+    `    category: "${category}",\n` +
+    `    pinned: ${pinned},\n` +
+    `    name: "${name}",\n` +
+    `    price: ${price},\n` +
+    `    caption: "${caption}",\n` +
+    `    images: ${formattedImages},\n` +
+    `    sizes: ${formattedSizes}\n` +
+    `  },`;
 
   // Show outputs
   const outputElem = document.getElementById('output');
   const instructionsElem = document.getElementById('instructions');
   const copyBtn = document.getElementById('copyBtn');
 
-  outputElem.value = `  ${formattedJs},`;
+  outputElem.value = formattedJsCode;
   instructionsElem.style.display = 'block';
   copyBtn.style.display = 'block';
 

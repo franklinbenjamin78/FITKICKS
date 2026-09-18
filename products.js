@@ -11,14 +11,11 @@ const products = [
   {      
     id: 1,      
     category: "new-balance",      
-    pinned: false,      
+    pinned: true,      
     name: "HIGH QUALITY NEW BALANCE SNEAKERS",      
     price: 85000,      
     caption: "HIGH QUALITY NEW BALANCE SNEAKERS - Premium Build & Comfort.",      
-    images: [
-      "https://res.cloudinary.com/vpgritcv/image/upload/v1789384369/WhatsApp_Image_2026-09-13_at_08.33.37_1.jpg",
-      "https://res.cloudinary.com/vpgritcv/image/upload/v1789384366/WhatsApp_Image_2026-09-13_at_08.33.37.jpg"
-    ],      
+    images: ["https://res.cloudinary.com/vpgritcv/image/upload/v1788818614/WhatsApp_Image_2026-09-07_at_14.50.02.jpg"],      
     sizes: ["40", "41", "42", "43", "44", "45"]    
   },    
   {      
@@ -28,7 +25,7 @@ const products = [
     name: "HIGH QUALITY NEW BALANCE SNEAKERS",      
     price: 85000,      
     caption: "HIGH QUALITY NEW BALANCE SNEAKERS - Premium Build & Comfort.",      
-    images: ["https://res.cloudinary.com/vpgritcv/image/upload/v1789384365/WhatsApp_Image_2026-09-13_at_08.33.19.jpg"],      
+    images: ["https://res.cloudinary.com/vpgritcv/image/upload/v1788818614/WhatsApp_Image_2026-09-07_at_14.50.14_1.jpg"],      
     sizes: ["40", "41", "42", "43", "44", "45"]    
   },    
   {      
@@ -38,7 +35,7 @@ const products = [
     name: "HIGH QUALITY NEW BALANCE SNEAKERS",      
     price: 85000,      
     caption: "HIGH QUALITY NEW BALANCE SNEAKERS - Premium Build & Comfort.",      
-    images: ["https://res.cloudinary.com/vpgritcv/image/upload/v1789384365/WhatsApp_Image_2026-09-13_at_08.33.31.jpg"],      
+    images: ["https://res.cloudinary.com/vpgritcv/image/upload/v1788818613/WhatsApp_Image_2026-09-07_at_14.50.12.jpg"],      
     sizes: ["40", "41", "42", "43", "44", "45"]    
   },    
   {      
@@ -48,7 +45,7 @@ const products = [
     name: "HIGH QUALITY NEW BALANCE SNEAKERS",      
     price: 85000,      
     caption: "HIGH QUALITY NEW BALANCE SNEAKERS - Premium Build & Comfort.",      
-    images: ["https://res.cloudinary.com/vpgritcv/image/upload/v1789384365/WhatsApp_Image_2026-09-13_at_08.33.36.jpg"],      
+    images: ["https://res.cloudinary.com/vpgritcv/image/upload/v1788818613/WhatsApp_Image_2026-09-07_at_14.50.03.jpg"],      
     sizes: ["40", "41", "42", "43", "44", "45"]    
   },    
   {      
@@ -58,45 +55,9 @@ const products = [
     name: "HIGH QUALITY NEW BALANCE SNEAKERS",      
     price: 85000,      
     caption: "HIGH QUALITY NEW BALANCE SNEAKERS - Premium Build & Comfort.",      
-    images: ["https://res.cloudinary.com/vpgritcv/image/upload/v1789384365/WhatsApp_Image_2026-09-13_at_08.33.35_1.jpg"],      
+    images: ["https://res.cloudinary.com/vpgritcv/image/upload/v1788818609/WhatsApp_Image_2026-09-07_at_14.50.12_1.jpg"],      
     sizes: ["40", "41", "42", "43", "44", "45"]    
-  },
-  {      
-    id: 6,      
-    category: "new-balance",      
-    pinned: false,      
-    name: "HIGH QUALITY NEW BALANCE SNEAKERS",      
-    price: 85000,      
-    caption: "HIGH QUALITY NEW BALANCE SNEAKERS - Premium Build & Comfort.",      
-    images: [
-      "https://res.cloudinary.com/vpgritcv/image/upload/v1789384365/WhatsApp_Image_2026-09-13_at_08.33.33.jpg",
-      "https://res.cloudinary.com/vpgritcv/image/upload/v1789384364/WhatsApp_Image_2026-09-13_at_08.33.34.jpg"
-    ],      
-    sizes: ["40", "41", "42", "43", "44", "45"]    
-  },
-  {      
-    id: 7,      
-    category: "new-balance",      
-    pinned: false,      
-    name: "HIGH QUALITY NEW BALANCE SNEAKERS",      
-    price: 85000,      
-    caption: "HIGH QUALITY NEW BALANCE SNEAKERS - Premium Build & Comfort.",      
-    images: ["https://res.cloudinary.com/vpgritcv/image/upload/v1789384364/WhatsApp_Image_2026-09-13_at_08.21.11.jpg"],      
-    sizes: ["40", "41", "42", "43", "44", "45"]    
-  },
-  {      
-    id: 8,      
-    category: "new-balance",      
-    pinned: false,      
-    name: "HIGH QUALITY NEW BALANCE SNEAKERS",      
-    price: 85000,      
-    caption: "HIGH QUALITY NEW BALANCE SNEAKERS - Premium Build & Comfort.",      
-    images: [
-      "https://res.cloudinary.com/vpgritcv/image/upload/v1788818605/WhatsApp_Image_2026-09-07_at_14.50.06_1.jpg",
-      "https://res.cloudinary.com/vpgritcv/image/upload/v1788818606/WhatsApp_Image_2026-09-07_at_14.50.06.jpg"
-    ],      
-    sizes: ["40", "41", "42", "43", "44", "45"]    
-  }
+  }  
 ];
 
 // Render all products  

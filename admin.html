@@ -89,7 +89,7 @@
         <div class="image-input-wrapper"><span>Link 5:</span><input type="url" class="cloudinary-link" placeholder="https://res.cloudinary.com/..."></div>
       </div>
       <button type="button" class="btn-add-link" onclick="addImageInput()">+ Add More Image Links</button>
-      <div class="hint">Fill in as many image links as you need. Empty link fields will automatically be ignored.</div>
+      <div class="hint">Fill in as many image links as you need. Empty link fields are automatically ignored.</div>
     </div>
 
     <div class="form-group">
@@ -104,7 +104,6 @@
         <option value="false">No</option>
         <option value="true">Yes</option>
       </select>
-      <!-- Hidden checkbox used by admin.js logic -->
       <input type="checkbox" id="prod-pinned" style="display:none;">
     </div>
 
@@ -117,7 +116,7 @@
       <li>Click the <strong>Copy Code</strong> button below.</li>
       <li>Open your <code>products.js</code> file.</li>
       <li>Find <code>const products = [</code> at the top.</li>
-      <li>Paste the code inside the array (either right at the top or bottom of the list).</li>
+      <li>Paste the code inside the array.</li>
       <li>Save <code>products.js</code> and refresh your website!</li>
     </ol>
   </div>
@@ -126,12 +125,11 @@
   <button id="copyBtn" onclick="copyProductCode()">📋 Copy Product Code</button>
 </div>
 
-<!-- Link your scripts -->
+<!-- Scripts -->
 <script src="products.js"></script>
 <script src="admin.js"></script>
 
 <script>
-  // Function to dynamically add link inputs up to 100
   let imageCount = 5;
   const maxImages = 100;
 
@@ -141,7 +139,6 @@
       return;
     }
     
-    // Add 5 more inputs at a time
     const container = document.getElementById('image-inputs-container');
     for (let i = 0; i < 5; i++) {
       if (imageCount >= maxImages) break;
@@ -154,38 +151,19 @@
     }
   }
 
-  // Synchronize select dropdown with the hidden checkbox for admin.js
+  // Sync pinned selection dropdown with checkbox
   document.getElementById('prod-pinned-select').addEventListener('change', function() {
     document.getElementById('prod-pinned').checked = (this.value === 'true');
   });
 
-  // Intercept form submit to gather dynamic image inputs before calling generateProductCode
+  // Handle Form Submission Directly
   document.getElementById('productForm').addEventListener('submit', function(e) {
     e.preventDefault();
 
-    // Collect all non-empty link inputs
-    const linkInputs = document.querySelectorAll('.cloudinary-link');
-    const validLinks = [];
-    linkInputs.forEach(input => {
-      if (input.value.trim().length > 0) {
-        validLinks.push(input.value.trim());
-      }
-    });
-
-    // Temporarily bridge collected links for admin.js processing
-    let hiddenImagesInput = document.getElementById('prod-images');
-    if (!hiddenImagesInput) {
-      hiddenImagesInput = document.createElement('input');
-      hiddenImagesInput.type = 'hidden';
-      hiddenImagesInput.id = 'prod-images';
-      document.body.appendChild(hiddenImagesInput);
-    }
-    hiddenImagesInput.value = validLinks.join(', ');
-
-    // Call code generator
+    // Call generateProductCode from admin.js directly
     generateProductCode();
 
-    // Display action UI
+    // Show output controls and scroll into view
     document.getElementById('instructions').style.display = 'block';
     const copyBtn = document.getElementById('copyBtn');
     copyBtn.style.display = 'block';

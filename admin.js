@@ -1,7 +1,3 @@
-// STORE CONTACT DETAILS
-const WHATSAPP_NUMBER = "2347071839581"; 
-const INSTAGRAM_HANDLE = "shakaman_stores";
-
 // Function to generate JavaScript product object code
 function generateProductCode() {
   const idInput = document.getElementById("prod-id").value.trim();

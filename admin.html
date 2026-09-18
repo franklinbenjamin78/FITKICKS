@@ -14,21 +14,13 @@
     input, select, textarea { width: 100%; padding: 10px 12px; border: 1px solid #ccc; border-radius: 8px; font-size: 14px; outline: none; transition: border 0.2s; }
     input:focus, select:focus, textarea:focus { border-color: #0095f6; }
     .hint { font-size: 11px; color: #8e8e8e; margin-top: 4px; }
-    
-    /* Dynamic Image Links Styling */
-    .image-inputs-container { display: flex; flex-direction: column; gap: 8px; margin-bottom: 8px; }
-    .image-input-wrapper { display: flex; align-items: center; gap: 8px; }
-    .image-input-wrapper span { font-size: 12px; font-weight: 600; color: #777; width: 60px; }
-    .btn-add-link { background: #eef7ff; color: #0095f6; border: 1px dashed #0095f6; padding: 8px 12px; border-radius: 8px; font-weight: 600; font-size: 13px; cursor: pointer; width: 100%; transition: background 0.2s; }
-    .btn-add-link:hover { background: #dceeff; }
-
-    button.btn-submit { background: #0095f6; color: #fff; border: none; padding: 12px; border-radius: 8px; font-weight: 600; font-size: 15px; width: 100%; cursor: pointer; margin-top: 16px; }
+    button.btn-submit { background: #0095f6; color: #fff; border: none; padding: 12px; border-radius: 8px; font-weight: 600; font-size: 15px; width: 100%; cursor: pointer; margin-top: 10px; }
     button.btn-submit:hover { background: #0074cc; }
     
     #instructions { display: none; background: #eef7ff; border-left: 4px solid #0095f6; padding: 14px; margin-top: 24px; border-radius: 4px; font-size: 13px; line-height: 1.5; }
     #instructions code { background: #dceeff; padding: 2px 6px; border-radius: 4px; font-weight: bold; }
 
-    #code-output { width: 100%; height: 220px; background: #1e1e1e; color: #d4d4d4; font-family: monospace; font-size: 13px; padding: 12px; border-radius: 8px; margin-top: 12px; resize: vertical; border: none; }
+    #output { width: 100%; height: 200px; background: #1e1e1e; color: #d4d4d4; font-family: monospace; font-size: 13px; padding: 12px; border-radius: 8px; margin-top: 12px; resize: vertical; border: none; }
     #copyBtn { display: none; background: #262626; color: #fff; border: none; padding: 10px; border-radius: 8px; font-weight: 600; font-size: 14px; width: 100%; cursor: pointer; margin-top: 8px; }
     #copyBtn:hover { background: #000; }
   </style>
@@ -41,13 +33,13 @@
   <form id="productForm">
     <div class="form-group">
       <label>Product ID</label>
-      <input type="number" id="prod-id" placeholder="Auto-calculating..." required>
-      <div class="hint">Automatically detected based on your highest existing ID in products.js.</div>
+      <input type="number" id="prodId" placeholder="e.g. 9" value="9" required>
+      <div class="hint">Must be higher than your last product ID.</div>
     </div>
 
     <div class="form-group">
       <label>Shoe Category</label>
-      <select id="prod-category">
+      <select id="prodCategory">
         <option value="new-balance">New Balance</option>
         <option value="air-jordan">Air Jordan</option>
         <option value="air-force-1">Air Force 1</option>
@@ -64,50 +56,40 @@
 
     <div class="form-group">
       <label>Shoe Name</label>
-      <input type="text" id="prod-name" value="HIGH QUALITY NEW BALANCE SNEAKERS" required>
+      <input type="text" id="prodName" value="HIGH QUALITY NEW BALANCE SNEAKERS" required>
     </div>
 
     <div class="form-group">
       <label>Price (₦)</label>
-      <input type="number" id="prod-price" placeholder="e.g. 85000" value="85000" required>
+      <input type="number" id="prodPrice" placeholder="e.g. 85000" value="85000" required>
     </div>
 
     <div class="form-group">
       <label>Caption / Details</label>
-      <input type="text" id="prod-caption" value="HIGH QUALITY NEW BALANCE SNEAKERS - Premium Build & Comfort." required>
+      <input type="text" id="prodCaption" value="HIGH QUALITY NEW BALANCE SNEAKERS - Premium Build & Comfort." required>
     </div>
 
-    <!-- Cloudinary Links Section -->
     <div class="form-group">
-      <label>Cloudinary Image / Video Links</label>
-      <div id="image-inputs-container" class="image-inputs-container">
-        <!-- Initial 5 Inputs using type="text" to prevent URL validation locks -->
-        <div class="image-input-wrapper"><span>Link 1:</span><input type="text" class="cloudinary-link" placeholder="https://res.cloudinary.com/..."></div>
-        <div class="image-input-wrapper"><span>Link 2:</span><input type="text" class="cloudinary-link" placeholder="https://res.cloudinary.com/..."></div>
-        <div class="image-input-wrapper"><span>Link 3:</span><input type="text" class="cloudinary-link" placeholder="https://res.cloudinary.com/..."></div>
-        <div class="image-input-wrapper"><span>Link 4:</span><input type="text" class="cloudinary-link" placeholder="https://res.cloudinary.com/..."></div>
-        <div class="image-input-wrapper"><span>Link 5:</span><input type="text" class="cloudinary-link" placeholder="https://res.cloudinary.com/..."></div>
-      </div>
-      <button type="button" class="btn-add-link" onclick="addImageInput()">+ Add More Image Links</button>
-      <div class="hint">Fill in as many image links as you need. Empty fields will be ignored.</div>
+      <label>Cloudinary Image/Video Links</label>
+      <textarea id="prodImages" rows="4" placeholder="Paste Cloudinary links here. Put each link on a new line for swipeable photos!" required></textarea>
+      <div class="hint">Paste one link per line. Multiple links will make the post swipeable automatically!</div>
     </div>
 
     <div class="form-group">
       <label>Available Sizes</label>
-      <input type="text" id="prod-sizes" value="40, 41, 42, 43, 44, 45" required>
-      <div class="hint">Separate sizes with commas</div>
+      <input type="text" id="prodSizes" value="40, 41, 42, 43, 44, 45" required>
+      <div class="hint">Separate sizes with commas (e.g. 40, 41, 42, 43, 44, 45)</div>
     </div>
 
     <div class="form-group">
       <label>Pin to Top?</label>
-      <select id="prod-pinned-select">
+      <select id="prodPinned">
         <option value="false">No</option>
         <option value="true">Yes</option>
       </select>
-      <input type="checkbox" id="prod-pinned" style="display:none;">
     </div>
 
-    <button type="button" class="btn-submit" onclick="runGenerator()">Generate Product Code</button>
+    <button type="submit" class="btn-submit">Generate Product Code</button>
   </form>
 
   <div id="instructions">
@@ -115,62 +97,16 @@
     <ol style="margin: 8px 0 0 0; padding-left: 20px;">
       <li>Click the <strong>Copy Code</strong> button below.</li>
       <li>Open your <code>products.js</code> file.</li>
-      <li>Paste the code inside your <code>products</code> array.</li>
-      <li>Save and refresh your site!</li>
+      <li>Find <code>const products = [</code> at the top.</li>
+      <li>Paste the code inside the array (either right at the top after <code>[</code> or right before the closing <code>];</code>).</li>
+      <li>Save <code>products.js</code> and refresh your website!</li>
     </ol>
   </div>
 
-  <textarea id="code-output" readonly></textarea>
+  <textarea id="output" readonly></textarea>
   <button id="copyBtn" onclick="copyProductCode()">📋 Copy Product Code</button>
 </div>
 
-<!-- Scripts -->
-<script src="products.js"></script>
 <script src="admin.js"></script>
-
-<script>
-  let imageCount = 5;
-  const maxImages = 100;
-
-  function addImageInput() {
-    if (imageCount >= maxImages) {
-      alert("Maximum limit of 100 image links reached.");
-      return;
-    }
-    
-    const container = document.getElementById('image-inputs-container');
-    for (let i = 0; i < 5; i++) {
-      if (imageCount >= maxImages) break;
-      imageCount++;
-      
-      const wrapper = document.createElement('div');
-      wrapper.className = 'image-input-wrapper';
-      wrapper.innerHTML = `<span>Link ${imageCount}:</span><input type="text" class="cloudinary-link" placeholder="https://res.cloudinary.com/...">`;
-      container.appendChild(wrapper);
-    }
-  }
-
-  // Synchronize pin selection
-  document.getElementById('prod-pinned-select').addEventListener('change', function() {
-    document.getElementById('prod-pinned').checked = (this.value === 'true');
-  });
-
-  // Explicit generator trigger function
-  function runGenerator() {
-    if (typeof generateProductCode === "function") {
-      generateProductCode();
-      
-      const codeOutput = document.getElementById('code-output');
-      if (codeOutput && codeOutput.value.trim().length > 0) {
-        document.getElementById('instructions').style.display = 'block';
-        document.getElementById('copyBtn').style.display = 'block';
-        codeOutput.scrollIntoView({ behavior: 'smooth' });
-      }
-    } else {
-      alert("Error: generateProductCode function not found. Check if admin.js is linked correctly.");
-    }
-  }
-</script>
-
 </body>
 </html>

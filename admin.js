@@ -1,86 +1,95 @@
-// Function to auto-calculate the next Product ID from products.js
-function setNextProductId() {
-  const idInput = document.getElementById('prodId');
+// STORE CONTACT DETAILS
+const WHATSAPP_NUMBER = "2347071839581"; 
+const INSTAGRAM_HANDLE = "shakaman_stores";
 
-  // Check if 'products' array is available from products.js
-  if (typeof products !== 'undefined' && Array.isArray(products) && products.length > 0) {
-    const maxId = Math.max(...products.map(p => p.id || 0));
-    idInput.value = maxId + 1;
-  } else {
-    // Default fallback if products.js is not linked or empty
-    idInput.value = 1;
+// Function to generate JavaScript product object code
+function generateProductCode() {
+  const idInput = document.getElementById("prod-id").value.trim();
+  const category = document.getElementById("prod-category").value;
+  const pinned = document.getElementById("prod-pinned").checked;
+  const name = document.getElementById("prod-name").value.trim();
+  const price = parseFloat(document.getElementById("prod-price").value) || 0;
+  const caption = document.getElementById("prod-caption").value.trim();
+  const sizesInput = document.getElementById("prod-sizes").value.trim();
+
+  // Collect all non-empty links from the link input fields
+  const linkInputs = document.querySelectorAll(".cloudinary-link");
+  const images = [];
+  linkInputs.forEach(input => {
+    const val = input.value.trim();
+    if (val.length > 0) {
+      images.push(val);
+    }
+  });
+
+  if (!idInput || !name || !price || images.length === 0) {
+    alert("Please fill in all required fields (ID, Name, Price, and at least 1 Image link).");
+    return;
+  }
+
+  const id = parseInt(idInput, 10);
+  const sizes = sizesInput.split(",").map(s => s.trim()).filter(s => s.length > 0);
+
+  // Construct formatted product object string
+  const formattedCode = `  {
+    id: ${id},
+    category: "${category}",
+    pinned: ${pinned},
+    name: "${name.replace(/"/g, '\\"')}",
+    price: ${price},
+    caption: "${caption.replace(/"/g, '\\"')}",
+    images: ${JSON.stringify(images, null, 2).replace(/\n/g, "\n    ")},
+    sizes: ${JSON.stringify(sizes)}
+  },`;
+
+  const outputElem = document.getElementById("code-output");
+  if (outputElem) {
+    outputElem.value = formattedCode;
   }
 }
 
-// Run auto-ID calculation when the page loads
-document.addEventListener('DOMContentLoaded', setNextProductId);
-
-document.getElementById('productForm').addEventListener('submit', function (e) {
-  e.preventDefault();
-
-  // Get form values
-  const id = parseInt(document.getElementById('prodId').value);
-  const category = document.getElementById('prodCategory').value;
-  const name = document.getElementById('prodName').value.trim().toUpperCase();
-  const price = parseInt(document.getElementById('prodPrice').value);
-  const caption = document.getElementById('prodCaption').value.trim() || `${name} - Premium Build & Comfort.`;
-  const pinned = document.getElementById('prodPinned').value === 'true';
-
-  // Process multi-line Cloudinary links
-  const rawImages = document.getElementById('prodImages').value.trim().split('\n');
-  const images = rawImages
-    .map(url => url.trim())
-    .filter(url => url.length > 0);
-
-  // Process comma-separated sizes
-  const rawSizes = document.getElementById('prodSizes').value.split(',');
-  const sizes = rawSizes
-    .map(size => size.trim())
-    .filter(size => size.length > 0);
-
-  // Format images array string
-  const formattedImages = JSON.stringify(images, null, 2).replace(/\n/g, '\n    ');
-
-  // Format sizes array string
-  const formattedSizes = JSON.stringify(sizes);
-
-  // Build exact JavaScript format (without quotes around keys)
-  const formattedJsCode = `  {\n` +
-    `    id: ${id},\n` +
-    `    category: "${category}",\n` +
-    `    pinned: ${pinned},\n` +
-    `    name: "${name}",\n` +
-    `    price: ${price},\n` +
-    `    caption: "${caption}",\n` +
-    `    images: ${formattedImages},\n` +
-    `    sizes: ${formattedSizes}\n` +
-    `  },`;
-
-  // Show outputs
-  const outputElem = document.getElementById('output');
-  const instructionsElem = document.getElementById('instructions');
-  const copyBtn = document.getElementById('copyBtn');
-
-  outputElem.value = formattedJsCode;
-  instructionsElem.style.display = 'block';
-  copyBtn.style.display = 'block';
-
-  // Smooth scroll to results
-  outputElem.scrollIntoView({ behavior: 'smooth' });
-});
-
-// Function to copy code to clipboard
+// Function to copy generated code to clipboard
 function copyProductCode() {
-  const outputElem = document.getElementById('output');
+  const outputElem = document.getElementById("code-output");
+  if (!outputElem || !outputElem.value) {
+    alert("Nothing to copy! Generate code first.");
+    return;
+  }
+
   outputElem.select();
   outputElem.setSelectionRange(0, 99999);
 
-  if (navigator.clipboard) {
+  if (navigator.clipboard && window.isSecureContext) {
     navigator.clipboard.writeText(outputElem.value).then(() => {
-      alert("✅ Product code copied to clipboard!");
+      alert("Product code copied to clipboard!");
+    }).catch(() => {
+      fallbackCopyCode(outputElem.value);
     });
   } else {
-    document.execCommand('copy');
-    alert("✅ Product code copied to clipboard!");
+    fallbackCopyCode(outputElem.value);
   }
 }
+
+function fallbackCopyCode(text) {
+  try {
+    document.execCommand("copy");
+    alert("Product code copied to clipboard!");
+  } catch (err) {
+    alert("Copy failed. Please manually select and copy the text.");
+  }
+}
+
+// Auto-calculate next Product ID based on existing products array
+function autoSetNextId() {
+  if (typeof products !== "undefined" && Array.isArray(products) && products.length > 0) {
+    const maxId = Math.max(...products.map(p => p.id || 0));
+    const nextIdElem = document.getElementById("prod-id");
+    if (nextIdElem) {
+      nextIdElem.value = maxId + 1;
+    }
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  autoSetNextId();
+});

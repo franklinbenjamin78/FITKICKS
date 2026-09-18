@@ -64,19 +64,9 @@ const products = [
   "pinned": false,
   "name": "HIGH QUALITY NEW BALANCE SNEAKERS",
   "price": 85000,
-  "caption": "HIGH QUALITY NEW BALANCE SNEAKERS - Premium Build & Comfort.",
-  "images": [
-    "https://res.cloudinary.com/vpgritcv/image/upload/v1789384369/WhatsApp_Image_2026-09-13_at_08.33.37_1.jpg",
-    "https://res.cloudinary.com/vpgritcv/image/upload/v1789384366/WhatsApp_Image_2026-09-13_at_08.33.37.jpg"
-  ],
-  "sizes": [
-    "40",
-    "41",
-    "42",
-    "43",
-    "44",
-    "45"
-  ]
+   caption: "HIGH QUALITY NEW BALANCE SNEAKERS - Premium Build & Comfort.",      
+    images: ["https://res.cloudinary.com/vpgritcv/image/upload/v1788818609/WhatsApp_Image_2026-09-07_at_14.50.12_1.jpg"],      
+    sizes: ["40", "41", "42", "43", "44", "45"]    
 },
 ];
 

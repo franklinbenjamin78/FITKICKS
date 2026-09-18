@@ -1,34 +1,42 @@
-// Function to generate JavaScript product object code
+// Function to generate the formatted product object
 function generateProductCode() {
-  const idInput = document.getElementById("prod-id").value.trim();
-  const category = document.getElementById("prod-category").value;
-  const pinned = document.getElementById("prod-pinned").checked;
-  const name = document.getElementById("prod-name").value.trim();
-  const price = parseFloat(document.getElementById("prod-price").value) || 0;
-  const caption = document.getElementById("prod-caption").value.trim();
-  const sizesInput = document.getElementById("prod-sizes").value.trim();
+  const idInput = document.getElementById("prod-id");
+  const categoryInput = document.getElementById("prod-category");
+  const pinnedInput = document.getElementById("prod-pinned-select");
+  const nameInput = document.getElementById("prod-name");
+  const priceInput = document.getElementById("prod-price");
+  const captionInput = document.getElementById("prod-caption");
+  const sizesInput = document.getElementById("prod-sizes");
 
-  // Collect all non-empty links from the link input fields
-  const linkInputs = document.querySelectorAll(".cloudinary-link");
+  const id = idInput ? idInput.value.trim() : "";
+  const category = categoryInput ? categoryInput.value : "others";
+  const pinned = pinnedInput ? pinnedInput.value === "true" : false;
+  const name = nameInput ? nameInput.value.trim() : "";
+  const price = priceInput ? parseFloat(priceInput.value) || 0 : 0;
+  const caption = captionInput ? captionInput.value.trim() : "";
+  const sizesRaw = sizesInput ? sizesInput.value.trim() : "";
+
+  // Collect all filled Cloudinary links
+  const linkElements = document.querySelectorAll(".cloudinary-link");
   const images = [];
-  linkInputs.forEach(input => {
-    const val = input.value.trim();
+  linkElements.forEach(el => {
+    const val = el.value.trim();
     if (val.length > 0) {
       images.push(val);
     }
   });
 
-  if (!idInput || !name || !price || images.length === 0) {
-    alert("Please fill in all required fields (ID, Name, Price, and at least 1 Image link).");
+  // Validation
+  if (!id || !name || price <= 0 || images.length === 0) {
+    alert("Please ensure Product ID, Name, Price, and at least 1 Image Link are provided.");
     return;
   }
 
-  const id = parseInt(idInput, 10);
-  const sizes = sizesInput.split(",").map(s => s.trim()).filter(s => s.length > 0);
+  const sizes = sizesRaw.split(",").map(s => s.trim()).filter(s => s.length > 0);
 
-  // Construct formatted product object string
-  const formattedCode = `  {
-    id: ${id},
+  // Format JS object block with trailing comma
+  const codeBlock = `  {
+    id: ${parseInt(id, 10)},
     category: "${category}",
     pinned: ${pinned},
     name: "${name.replace(/"/g, '\\"')}",
@@ -38,17 +46,26 @@ function generateProductCode() {
     sizes: ${JSON.stringify(sizes)}
   },`;
 
+  // Output generated code
   const outputElem = document.getElementById("code-output");
   if (outputElem) {
-    outputElem.value = formattedCode;
+    outputElem.value = codeBlock;
+    
+    // Display control panels
+    const instructions = document.getElementById("instructions");
+    const copyBtn = document.getElementById("copyBtn");
+    if (instructions) instructions.style.display = "block";
+    if (copyBtn) copyBtn.style.display = "block";
+    
+    outputElem.scrollIntoView({ behavior: "smooth" });
   }
 }
 
-// Function to copy generated code to clipboard
+// Copy to Clipboard
 function copyProductCode() {
   const outputElem = document.getElementById("code-output");
   if (!outputElem || !outputElem.value) {
-    alert("Nothing to copy! Generate code first.");
+    alert("No generated code to copy!");
     return;
   }
 
@@ -56,36 +73,34 @@ function copyProductCode() {
   outputElem.setSelectionRange(0, 99999);
 
   if (navigator.clipboard && window.isSecureContext) {
-    navigator.clipboard.writeText(outputElem.value).then(() => {
-      alert("Product code copied to clipboard!");
-    }).catch(() => {
-      fallbackCopyCode(outputElem.value);
-    });
+    navigator.clipboard.writeText(outputElem.value)
+      .then(() => alert("Product code copied to clipboard!"))
+      .catch(() => fallbackCopy(outputElem.value));
   } else {
-    fallbackCopyCode(outputElem.value);
+    fallbackCopy(outputElem.value);
   }
 }
 
-function fallbackCopyCode(text) {
+function fallbackCopy(text) {
   try {
     document.execCommand("copy");
     alert("Product code copied to clipboard!");
   } catch (err) {
-    alert("Copy failed. Please manually select and copy the text.");
+    alert("Failed to copy automatically. Please select text and copy manually.");
   }
 }
 
-// Auto-calculate next Product ID based on existing products array
-function autoSetNextId() {
+// Automatically calculate next product ID if products array exists
+function autoDetectId() {
   if (typeof products !== "undefined" && Array.isArray(products) && products.length > 0) {
     const maxId = Math.max(...products.map(p => p.id || 0));
-    const nextIdElem = document.getElementById("prod-id");
-    if (nextIdElem) {
-      nextIdElem.value = maxId + 1;
+    const idElem = document.getElementById("prod-id");
+    if (idElem) {
+      idElem.value = maxId + 1;
     }
   }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  autoSetNextId();
+  autoDetectId();
 });

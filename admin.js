@@ -1,106 +1,66 @@
-// Function to generate the formatted product object
-function generateProductCode() {
-  const idInput = document.getElementById("prod-id");
-  const categoryInput = document.getElementById("prod-category");
-  const pinnedInput = document.getElementById("prod-pinned-select");
-  const nameInput = document.getElementById("prod-name");
-  const priceInput = document.getElementById("prod-price");
-  const captionInput = document.getElementById("prod-caption");
-  const sizesInput = document.getElementById("prod-sizes");
+document.getElementById('productForm').addEventListener('submit', function (e) {
+  e.preventDefault();
 
-  const id = idInput ? idInput.value.trim() : "";
-  const category = categoryInput ? categoryInput.value : "others";
-  const pinned = pinnedInput ? pinnedInput.value === "true" : false;
-  const name = nameInput ? nameInput.value.trim() : "";
-  const price = priceInput ? parseFloat(priceInput.value) || 0 : 0;
-  const caption = captionInput ? captionInput.value.trim() : "";
-  const sizesRaw = sizesInput ? sizesInput.value.trim() : "";
+  // Get form values
+  const id = parseInt(document.getElementById('prodId').value);
+  const category = document.getElementById('prodCategory').value;
+  const name = document.getElementById('prodName').value.trim().toUpperCase();
+  const price = parseInt(document.getElementById('prodPrice').value);
+  const caption = document.getElementById('prodCaption').value.trim() || `${name} - Premium Build & Comfort.`;
+  const pinned = document.getElementById('prodPinned').value === 'true';
 
-  // Collect all filled Cloudinary links
-  const linkElements = document.querySelectorAll(".cloudinary-link");
-  const images = [];
-  linkElements.forEach(el => {
-    const val = el.value.trim();
-    if (val.length > 0) {
-      images.push(val);
-    }
-  });
+  // Process multi-line Cloudinary links
+  const rawImages = document.getElementById('prodImages').value.trim().split('\n');
+  const images = rawImages
+    .map(url => url.trim())
+    .filter(url => url.length > 0);
 
-  // Validation
-  if (!id || !name || price <= 0 || images.length === 0) {
-    alert("Please ensure Product ID, Name, Price, and at least 1 Image Link are provided.");
-    return;
-  }
+  // Process comma-separated sizes
+  const rawSizes = document.getElementById('prodSizes').value.split(',');
+  const sizes = rawSizes
+    .map(size => size.trim())
+    .filter(size => size.length > 0);
 
-  const sizes = sizesRaw.split(",").map(s => s.trim()).filter(s => s.length > 0);
+  // Build JSON structure matching product.js
+  const productObject = {
+    id: id,
+    category: category,
+    pinned: pinned,
+    name: name,
+    price: price,
+    caption: caption,
+    images: images,
+    sizes: sizes
+  };
 
-  // Format JS object block with trailing comma
-  const codeBlock = `  {
-    id: ${parseInt(id, 10)},
-    category: "${category}",
-    pinned: ${pinned},
-    name: "${name.replace(/"/g, '\\"')}",
-    price: ${price},
-    caption: "${caption.replace(/"/g, '\\"')}",
-    images: ${JSON.stringify(images, null, 2).replace(/\n/g, "\n    ")},
-    sizes: ${JSON.stringify(sizes)}
-  },`;
+  // Format product object into JS string
+  const formattedJs = JSON.stringify(productObject, null, 2);
 
-  // Output generated code
-  const outputElem = document.getElementById("code-output");
-  if (outputElem) {
-    outputElem.value = codeBlock;
-    
-    // Display control panels
-    const instructions = document.getElementById("instructions");
-    const copyBtn = document.getElementById("copyBtn");
-    if (instructions) instructions.style.display = "block";
-    if (copyBtn) copyBtn.style.display = "block";
-    
-    outputElem.scrollIntoView({ behavior: "smooth" });
-  }
-}
+  // Show outputs
+  const outputElem = document.getElementById('output');
+  const instructionsElem = document.getElementById('instructions');
+  const copyBtn = document.getElementById('copyBtn');
 
-// Copy to Clipboard
+  outputElem.value = `  ${formattedJs},`;
+  instructionsElem.style.display = 'block';
+  copyBtn.style.display = 'block';
+
+  // Smooth scroll to results
+  outputElem.scrollIntoView({ behavior: 'smooth' });
+});
+
+// Function to copy formatted JS code to clipboard
 function copyProductCode() {
-  const outputElem = document.getElementById("code-output");
-  if (!outputElem || !outputElem.value) {
-    alert("No generated code to copy!");
-    return;
-  }
-
+  const outputElem = document.getElementById('output');
   outputElem.select();
   outputElem.setSelectionRange(0, 99999);
 
-  if (navigator.clipboard && window.isSecureContext) {
-    navigator.clipboard.writeText(outputElem.value)
-      .then(() => alert("Product code copied to clipboard!"))
-      .catch(() => fallbackCopy(outputElem.value));
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(outputElem.value).then(() => {
+      alert("✅ Product code copied to clipboard!");
+    });
   } else {
-    fallbackCopy(outputElem.value);
+    document.execCommand('copy');
+    alert("✅ Product code copied to clipboard!");
   }
 }
-
-function fallbackCopy(text) {
-  try {
-    document.execCommand("copy");
-    alert("Product code copied to clipboard!");
-  } catch (err) {
-    alert("Failed to copy automatically. Please select text and copy manually.");
-  }
-}
-
-// Automatically calculate next product ID if products array exists
-function autoDetectId() {
-  if (typeof products !== "undefined" && Array.isArray(products) && products.length > 0) {
-    const maxId = Math.max(...products.map(p => p.id || 0));
-    const idElem = document.getElementById("prod-id");
-    if (idElem) {
-      idElem.value = maxId + 1;
-    }
-  }
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-  autoDetectId();
-});

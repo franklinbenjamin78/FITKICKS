@@ -4,6 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Shakaman Stores - Admin Generator</title>
+  
+  <!-- Load scripts in head to ensure functions are ready -->
+  <script src="products.js"></script>
+  <script src="admin.js"></script>
+
   <style>
     * { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
     body { background: #f4f4f9; padding: 20px; margin: 0; color: #262626; }
@@ -15,7 +20,6 @@
     input:focus, select:focus, textarea:focus { border-color: #0095f6; }
     .hint { font-size: 11px; color: #8e8e8e; margin-top: 4px; }
     
-    /* Dynamic Image Links Styling */
     .image-inputs-container { display: flex; flex-direction: column; gap: 8px; margin-bottom: 8px; }
     .image-input-wrapper { display: flex; align-items: center; gap: 8px; }
     .image-input-wrapper span { font-size: 12px; font-weight: 600; color: #777; width: 60px; }
@@ -81,7 +85,6 @@
     <div class="form-group">
       <label>Cloudinary Image / Video Links</label>
       <div id="image-inputs-container" class="image-inputs-container">
-        <!-- Initial 5 Inputs using type="text" to prevent URL validation locks -->
         <div class="image-input-wrapper"><span>Link 1:</span><input type="text" class="cloudinary-link" placeholder="https://res.cloudinary.com/..."></div>
         <div class="image-input-wrapper"><span>Link 2:</span><input type="text" class="cloudinary-link" placeholder="https://res.cloudinary.com/..."></div>
         <div class="image-input-wrapper"><span>Link 3:</span><input type="text" class="cloudinary-link" placeholder="https://res.cloudinary.com/..."></div>
@@ -124,10 +127,6 @@
   <button id="copyBtn" onclick="copyProductCode()">📋 Copy Product Code</button>
 </div>
 
-<!-- Scripts -->
-<script src="products.js"></script>
-<script src="admin.js"></script>
-
 <script>
   let imageCount = 5;
   const maxImages = 100;
@@ -150,12 +149,10 @@
     }
   }
 
-  // Synchronize pin selection
   document.getElementById('prod-pinned-select').addEventListener('change', function() {
     document.getElementById('prod-pinned').checked = (this.value === 'true');
   });
 
-  // Explicit generator trigger function
   function runGenerator() {
     if (typeof generateProductCode === "function") {
       generateProductCode();
@@ -167,7 +164,7 @@
         codeOutput.scrollIntoView({ behavior: 'smooth' });
       }
     } else {
-      alert("Error: generateProductCode function not found. Check if admin.js is linked correctly.");
+      alert("Error: generateProductCode function not found. Ensure admin.js is saved in the exact same folder as admin.html.");
     }
   }
 </script>

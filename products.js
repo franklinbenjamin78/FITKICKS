@@ -58,16 +58,16 @@ const products = [
     images: ["https://res.cloudinary.com/vpgritcv/image/upload/v1788818609/WhatsApp_Image_2026-09-07_at_14.50.12_1.jpg"],      
     sizes: ["40", "41", "42", "43", "44", "45"]    
   }  
-    {
-  "id": 6,
-  "category": "new-balance",
-  "pinned": false,
-  "name": "HIGH QUALITY NEW BALANCE SNEAKERS",
-  "price": 85000,
-   caption: "HIGH QUALITY NEW BALANCE SNEAKERS - Premium Build & Comfort.",      
-    images: ["https://res.cloudinary.com/vpgritcv/image/upload/v1788818609/WhatsApp_Image_2026-09-07_at_14.50.12_1.jpg"],      
-    sizes: ["40", "41", "42", "43", "44", "45"]    
-},
+     {
+    id: 6,
+    category: "new-balance",
+    pinned: false,
+    name: "HIGH QUALITY NEW BALANCE SNEAKERS",
+    price: 85000,
+    caption: "HIGH QUALITY NEW BALANCE SNEAKERS - Premium Build & Comfort.",
+    images: ["https://res.cloudinary.com/vpgritcv/image/upload/v1789384365/WhatsApp_Image_2026-09-13_at_08.33.19.jpg"],
+    sizes: ["40","41","42","43","44","45"]
+ } 
 ];
 
 // Render all products  

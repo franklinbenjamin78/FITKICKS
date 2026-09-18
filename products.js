@@ -6,59 +6,59 @@ const INSTAGRAM_HANDLE = "shakaman_stores"; // Your Instagram handle
 let cart = [];  
 let activeCategory = "all";
 
-// YOUR PRODUCT LIST  
+// YOUR PRODUCT LIST   
 const products = [    
-  {      
-    id: 1,      
-    category: "new-balance",      
-    pinned: true,      
-    name: "HIGH QUALITY NEW BALANCE SNEAKERS",      
-    price: 85000,      
-    caption: "HIGH QUALITY NEW BALANCE SNEAKERS - Premium Build & Comfort.",      
-    images: ["https://res.cloudinary.com/vpgritcv/image/upload/v1788818614/WhatsApp_Image_2026-09-07_at_14.50.02.jpg"],      
+  {     
+    id: 1,     
+    category: "new-balance",     
+    pinned: true,     
+    name: "HIGH QUALITY NEW BALANCE SNEAKERS",     
+    price: 85000,     
+    caption: "HIGH QUALITY NEW BALANCE SNEAKERS - Premium Build & Comfort.",     
+    images: ["https://res.cloudinary.com/vpgritcv/image/upload/v1788818614/WhatsApp_Image_2026-09-07_at_14.50.02.jpg"],     
     sizes: ["40", "41", "42", "43", "44", "45"]    
   },    
-  {      
-    id: 2,      
-    category: "new-balance",      
-    pinned: false,      
-    name: "HIGH QUALITY NEW BALANCE SNEAKERS",      
-    price: 85000,      
-    caption: "HIGH QUALITY NEW BALANCE SNEAKERS - Premium Build & Comfort.",      
-    images: ["https://res.cloudinary.com/vpgritcv/image/upload/v1788818614/WhatsApp_Image_2026-09-07_at_14.50.14_1.jpg"],      
+  {     
+    id: 2,     
+    category: "new-balance",     
+    pinned: false,     
+    name: "HIGH QUALITY NEW BALANCE SNEAKERS",     
+    price: 85000,     
+    caption: "HIGH QUALITY NEW BALANCE SNEAKERS - Premium Build & Comfort.",     
+    images: ["https://res.cloudinary.com/vpgritcv/image/upload/v1788818614/WhatsApp_Image_2026-09-07_at_14.50.14_1.jpg"],     
     sizes: ["40", "41", "42", "43", "44", "45"]    
   },    
-  {      
-    id: 3,      
-    category: "new-balance",      
-    pinned: false,      
-    name: "HIGH QUALITY NEW BALANCE SNEAKERS",      
-    price: 85000,      
-    caption: "HIGH QUALITY NEW BALANCE SNEAKERS - Premium Build & Comfort.",      
-    images: ["https://res.cloudinary.com/vpgritcv/image/upload/v1788818613/WhatsApp_Image_2026-09-07_at_14.50.12.jpg"],      
+  {     
+    id: 3,     
+    category: "new-balance",     
+    pinned: false,     
+    name: "HIGH QUALITY NEW BALANCE SNEAKERS",     
+    price: 85000,     
+    caption: "HIGH QUALITY NEW BALANCE SNEAKERS - Premium Build & Comfort.",     
+    images: ["https://res.cloudinary.com/vpgritcv/image/upload/v1788818613/WhatsApp_Image_2026-09-07_at_14.50.12.jpg"],     
     sizes: ["40", "41", "42", "43", "44", "45"]    
   },    
-  {      
-    id: 4,      
-    category: "new-balance",      
-    pinned: false,      
-    name: "HIGH QUALITY NEW BALANCE SNEAKERS",      
-    price: 85000,      
-    caption: "HIGH QUALITY NEW BALANCE SNEAKERS - Premium Build & Comfort.",      
-    images: ["https://res.cloudinary.com/vpgritcv/image/upload/v1788818613/WhatsApp_Image_2026-09-07_at_14.50.03.jpg"],      
+  {     
+    id: 4,     
+    category: "new-balance",     
+    pinned: false,     
+    name: "HIGH QUALITY NEW BALANCE SNEAKERS",     
+    price: 85000,     
+    caption: "HIGH QUALITY NEW BALANCE SNEAKERS - Premium Build & Comfort.",     
+    images: ["https://res.cloudinary.com/vpgritcv/image/upload/v1788818613/WhatsApp_Image_2026-09-07_at_14.50.03.jpg"],     
     sizes: ["40", "41", "42", "43", "44", "45"]    
   },    
-  {      
-    id: 5,      
-    category: "new-balance",      
-    pinned: false,      
-    name: "HIGH QUALITY NEW BALANCE SNEAKERS",      
-    price: 85000,      
-    caption: "HIGH QUALITY NEW BALANCE SNEAKERS - Premium Build & Comfort.",      
-    images: ["https://res.cloudinary.com/vpgritcv/image/upload/v1788818609/WhatsApp_Image_2026-09-07_at_14.50.12_1.jpg"],      
+  {     
+    id: 5,     
+    category: "new-balance",     
+    pinned: false,     
+    name: "HIGH QUALITY NEW BALANCE SNEAKERS",     
+    price: 85000,     
+    caption: "HIGH QUALITY NEW BALANCE SNEAKERS - Premium Build & Comfort.",     
+    images: ["https://res.cloudinary.com/vpgritcv/image/upload/v1788818609/WhatsApp_Image_2026-09-07_at_14.50.12_1.jpg"],     
     sizes: ["40", "41", "42", "43", "44", "45"]    
-  }  
-     {
+  },   
+  {
     id: 6,
     category: "new-balance",
     pinned: false,
@@ -67,12 +67,13 @@ const products = [
     caption: "HIGH QUALITY NEW BALANCE SNEAKERS - Premium Build & Comfort.",
     images: ["https://res.cloudinary.com/vpgritcv/image/upload/v1789384365/WhatsApp_Image_2026-09-13_at_08.33.19.jpg"],
     sizes: ["40","41","42","43","44","45"]
- } 
+  }
 ];
 
 // Render all products  
 function renderProducts() {    
   const feedContainer = document.getElementById("feed-container");    
+  if (!feedContainer) return;
   feedContainer.innerHTML = "";
 
   // SORT PRODUCTS: Pinned items are sorted to the front of the list    
@@ -94,7 +95,7 @@ function renderProducts() {
                   </svg>                    
                   <svg class="icon-unmuted" width="16" height="16" fill="currentColor" viewBox="0 0 24 24" style="display: none;">                      
                     <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>                    
-                  </svg>                  
+                  </svg>                    
                 </button>                
               </div>              
             </div>`;          
@@ -163,11 +164,13 @@ function renderProducts() {
   });
 
   // Initialize Swiper    
-  new Swiper('.post-carousel', {      
-    loop: false,      
-    pagination: { el: '.swiper-pagination', clickable: true },      
-    navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },    
-  });  
+  if (typeof Swiper !== 'undefined') {
+    new Swiper('.post-carousel', {      
+      loop: false,      
+      pagination: { el: '.swiper-pagination', clickable: true },      
+      navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },    
+    });
+  }
 }
 
 // --- CATEGORY FILTER FUNCTION ---  
@@ -245,6 +248,8 @@ function updateCartUI() {
   const container = document.getElementById('cart-items-container');    
   const totalElem = document.getElementById('cart-total-price');
 
+  if (!badge || !container || !totalElem) return;
+
   const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);    
   const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
 
@@ -255,11 +260,13 @@ function updateCartUI() {
     badge.style.display = 'none';    
   }
 
+  const deliveryForm = document.getElementById('delivery-form');
+
   if (cart.length === 0) {      
     container.innerHTML = `<p style="text-align:center; color:#8e8e8e; padding: 20px 0;">Your cart is empty.</p>`;      
-    document.getElementById('delivery-form').style.display = 'none';    
+    if (deliveryForm) deliveryForm.style.display = 'none';    
   } else {      
-    document.getElementById('delivery-form').style.display = 'block';      
+    if (deliveryForm) deliveryForm.style.display = 'block';      
     container.innerHTML = cart.map((item, index) => `        
       <div class="cart-item">          
         <div class="cart-item-info">            
@@ -276,7 +283,9 @@ function updateCartUI() {
 
 function toggleCartModal() {    
   const modal = document.getElementById('cart-modal');    
-  modal.style.display = (modal.style.display === 'flex') ? 'none' : 'flex';  
+  if (modal) {
+    modal.style.display = (modal.style.display === 'flex') ? 'none' : 'flex';  
+  }
 }
 
 function closeCartOnOutsideClick(e) {    
@@ -358,7 +367,7 @@ function copyToClipboardAndRedirect(textToCopy, targetUrl) {
     navigator.clipboard.writeText(textToCopy).then(() => {
       alert("Order details copied to clipboard! Paste it directly into your Instagram DM thread.");
       window.location.href = targetUrl;
-    }).catch(err => {
+    }).catch(() => {
       fallbackCopyText(textToCopy, targetUrl);
     });
   } else {
@@ -409,10 +418,10 @@ function handlePostClick(element) {
   const container = document.getElementById('feed-container');    
   const backBtn = document.getElementById('back-grid-btn');
 
-  if (container.classList.contains('grid-mode')) {      
+  if (container && container.classList.contains('grid-mode')) {      
     container.classList.remove('grid-mode');      
     container.classList.add('feed-mode');      
-    backBtn.style.display = 'flex';          
+    if (backBtn) backBtn.style.display = 'flex';          
     setTimeout(() => {        
       element.scrollIntoView({ behavior: 'smooth', block: 'start' });      
     }, 50);    
@@ -424,9 +433,11 @@ function switchToGridMode() {
   const container = document.getElementById('feed-container');    
   const backBtn = document.getElementById('back-grid-btn');
 
-  container.classList.remove('feed-mode');    
-  container.classList.add('grid-mode');    
-  backBtn.style.display = 'none';        
+  if (container) {
+    container.classList.remove('feed-mode');    
+    container.classList.add('grid-mode');  
+  }
+  if (backBtn) backBtn.style.display = 'none';        
   window.scrollTo({ top: 0, behavior: 'smooth' });    
   setActiveNav('nav-home');  
 }
@@ -435,6 +446,8 @@ function switchToGridMode() {
 function toggleSearchBar() {    
   const searchBar = document.getElementById('search-bar');    
   const searchInput = document.getElementById('search-input');    
+  if (!searchBar || !searchInput) return;
+
   const isSearchActive = searchBar.classList.contains('active');
 
   if (!isSearchActive) {      
@@ -451,17 +464,21 @@ function toggleSearchBar() {
 
 function setActiveNav(navId) {    
   document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));    
-  document.getElementById(navId).classList.add('active');  
+  const navElem = document.getElementById(navId);
+  if (navElem) navElem.classList.add('active');  
 }
 
 function filterPosts() {    
-  const query = document.getElementById('search-input').value.toLowerCase().trim();    
+  const searchInput = document.getElementById('search-input');
+  if (!searchInput) return;
+
+  const query = searchInput.value.toLowerCase().trim();    
   const posts = document.querySelectorAll('.post');    
   let visibleCount = 0;
 
   posts.forEach(post => {      
-    const productKeywords = post.getAttribute('data-product');      
-    const postCategory = post.getAttribute('data-category');
+    const productKeywords = post.getAttribute('data-product') || '';      
+    const postCategory = post.getAttribute('data-category') || '';
 
     const matchesSearch = productKeywords.includes(query);      
     const matchesCategory = (activeCategory === 'all') || (postCategory === activeCategory);
@@ -474,8 +491,9 @@ function filterPosts() {
     }    
   });
 
-  document.getElementById('no-results').style.display = visibleCount === 0 ? 'block' : 'none';  
+  const noResults = document.getElementById('no-results');
+  if (noResults) noResults.style.display = visibleCount === 0 ? 'block' : 'none';  
 }
 
 // Initial Run  
-renderProducts();
+document.addEventListener('DOMContentLoaded', renderProducts);

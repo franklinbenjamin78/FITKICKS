@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shakaman Stores - Admin Generator</title>
+  <style>
+    * { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body { background: #f4f4f9; padding: 20px; margin: 0; color: #262626; }
+    .container { max-width: 650px; margin: 0 auto; background: #ffffff; padding: 24px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+    h2 { margin-top: 0; font-size: 20px; text-align: center; color: #111; border-bottom: 2px solid #eee; padding-bottom: 12px; }
+    .form-group { margin-bottom: 16px; }
+    label { display: block; font-weight: 600; font-size: 13px; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; color: #555; }
+    input, select, textarea { width: 100%; padding: 10px 12px; border: 1px solid #ccc; border-radius: 8px; font-size: 14px; outline: none; transition: border 0.2s; }
+    input:focus, select:focus, textarea:focus { border-color: #0095f6; }
+    .hint { font-size: 11px; color: #8e8e8e; margin-top: 4px; }
+    button.btn-submit { background: #0095f6; color: #fff; border: none; padding: 12px; border-radius: 8px; font-weight: 600; font-size: 15px; width: 100%; cursor: pointer; margin-top: 10px; }
+    button.btn-submit:hover { background: #0074cc; }
+    
+    #instructions { display: none; background: #eef7ff; border-left: 4px solid #0095f6; padding: 14px; margin-top: 24px; border-radius: 4px; font-size: 13px; line-height: 1.5; }
+    #instructions code { background: #dceeff; padding: 2px 6px; border-radius: 4px; font-weight: bold; }
+
+    #output { width: 100%; height: 200px; background: #1e1e1e; color: #d4d4d4; font-family: monospace; font-size: 13px; padding: 12px; border-radius: 8px; margin-top: 12px; resize: vertical; border: none; }
+    #copyBtn { display: none; background: #262626; color: #fff; border: none; padding: 10px; border-radius: 8px; font-weight: 600; font-size: 14px; width: 100%; cursor: pointer; margin-top: 8px; }
+    #copyBtn:hover { background: #000; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2>👟 Add New Product Generator</h2>
+  
+  <form id="productForm">
+    <div class="form-group">
+      <label>Product ID (Auto-Calculated)</label>
+      <input type="number" id="prodId" placeholder="Auto-calculating..." required>
+      <div class="hint">Automatically detected based on your highest existing ID in products.js.</div>
+    </div>
+
+    <div class="form-group">
+      <label>Shoe Category</label>
+      <select id="prodCategory">
+        <option value="new-balance">New Balance</option>
+        <option value="air-jordan">Air Jordan</option>
+        <option value="air-force-1">Air Force 1</option>
+        <option value="adidas">Adidas</option>
+        <option value="louis-vuitton">Louis Vuitton</option>
+        <option value="balenciaga">Balenciaga</option>
+        <option value="yeezy">Yeezy</option>
+        <option value="nike-runners">Nike Runners</option>
+        <option value="saucony">Saucony</option>
+        <option value="puma">Puma</option>
+        <option value="others">Others</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Shoe Name</label>
+      <input type="text" id="prodName" value="HIGH QUALITY NEW BALANCE SNEAKERS" required>
+    </div>
+
+    <div class="form-group">
+      <label>Price (₦)</label>
+      <input type="number" id="prodPrice" placeholder="e.g. 85000" value="85000" required>
+    </div>
+
+    <div class="form-group">
+      <label>Caption / Details</label>
+      <input type="text" id="prodCaption" value="HIGH QUALITY NEW BALANCE SNEAKERS - Premium Build & Comfort." required>
+    </div>
+
+    <div class="form-group">
+      <label>Cloudinary Image/Video Links</label>
+      <textarea id="prodImages" rows="4" placeholder="Paste Cloudinary links here. Put each link on a new line for swipeable photos!" required></textarea>
+      <div class="hint">Paste one link per line. Multiple links will make the post swipeable automatically!</div>
+    </div>
+
+    <div class="form-group">
+      <label>Available Sizes</label>
+      <input type="text" id="prodSizes" value="40, 41, 42, 43, 44, 45" required>
+      <div class="hint">Separate sizes with commas (e.g. 40, 41, 42, 43, 44, 45)</div>
+    </div>
+
+    <div class="form-group">
+      <label>Pin to Top?</label>
+      <select id="prodPinned">
+        <option value="false">No</option>
+        <option value="true">Yes</option>
+      </select>
+    </div>
+
+    <button type="submit" class="btn-submit">Generate Product Code</button>
+  </form>
+
+  <div id="instructions">
+    <strong>📋 How to update products.js:</strong>
+    <ol style="margin: 8px 0 0 0; padding-left: 20px;">
+      <li>Click the <strong>Copy Code</strong> button below.</li>
+      <li>Open your <code>products.js</code> file.</li>
+      <li>Find <code>const products = [</code> at the top.</li>
+      <li>Paste the code inside the array (either right at the top after <code>[</code> or right before the closing <code>];</code>).</li>
+      <li>Save <code>products.js</code> and refresh your website!</li>
+    </ol>
+  </div>
+
+  <textarea id="output" readonly></textarea>
+  <button id="copyBtn" onclick="copyProductCode()">📋 Copy Product Code</button>
+</div>
+
+<!-- Scripts -->
+<script src="products.js"></script>
+<script src="admin.js"></script>
+</body>
+</html>
